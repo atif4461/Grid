@@ -114,25 +114,25 @@ void WilsonKernels<Impl>::GenericDhopSiteDag(StencilView &st, DoubledGaugeFieldV
 					     SiteHalfSpinor *buf, int sF,
 					     int sU, const FermionFieldView &in, FermionFieldView &out)
 {
-  typedef decltype(coalescedRead(buf[0]))   calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0])) calcSpinor;
-  calcHalfSpinor chi;
-  //  calcHalfSpinor *chi_p;
-  calcHalfSpinor Uchi;
-  calcSpinor result;
-  StencilEntry *SE;
-  int ptype;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  GENERIC_STENCIL_LEG(Xp,spProjXp,spReconXp);
-  GENERIC_STENCIL_LEG(Yp,spProjYp,accumReconYp);
-  GENERIC_STENCIL_LEG(Zp,spProjZp,accumReconZp);
-  GENERIC_STENCIL_LEG(Tp,spProjTp,accumReconTp);
-  GENERIC_STENCIL_LEG(Xm,spProjXm,accumReconXm);
-  GENERIC_STENCIL_LEG(Ym,spProjYm,accumReconYm);
-  GENERIC_STENCIL_LEG(Zm,spProjZm,accumReconZm);
-  GENERIC_STENCIL_LEG(Tm,spProjTm,accumReconTm);
-  coalescedWrite(out[sF],result,lane);
+//  typedef decltype(coalescedRead(buf[0]))   calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0])) calcSpinor;
+//  calcHalfSpinor chi;
+//  //  calcHalfSpinor *chi_p;
+//  calcHalfSpinor Uchi;
+//  calcSpinor result;
+//  StencilEntry *SE;
+//  int ptype;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  GENERIC_STENCIL_LEG(Xp,spProjXp,spReconXp);
+//  GENERIC_STENCIL_LEG(Yp,spProjYp,accumReconYp);
+//  GENERIC_STENCIL_LEG(Zp,spProjZp,accumReconZp);
+//  GENERIC_STENCIL_LEG(Tp,spProjTp,accumReconTp);
+//  GENERIC_STENCIL_LEG(Xm,spProjXm,accumReconXm);
+//  GENERIC_STENCIL_LEG(Ym,spProjYm,accumReconYm);
+//  GENERIC_STENCIL_LEG(Zm,spProjZm,accumReconZm);
+//  GENERIC_STENCIL_LEG(Tm,spProjTm,accumReconTm);
+//  coalescedWrite(out[sF],result,lane);
 };
 
 template <class Impl> accelerator_inline
@@ -140,26 +140,26 @@ void WilsonKernels<Impl>::GenericDhopSite(StencilView &st, DoubledGaugeFieldView
 					  SiteHalfSpinor *buf, int sF,
 					  int sU, const FermionFieldView &in, FermionFieldView &out)
 {
-  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0]))  calcSpinor;
-  calcHalfSpinor chi;
-  //  calcHalfSpinor *chi_p;
-  calcHalfSpinor Uchi;
-  calcSpinor result;
-  StencilEntry *SE;
-  int ptype;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  GENERIC_STENCIL_LEG(Xm,spProjXp,spReconXp);
-  GENERIC_STENCIL_LEG(Ym,spProjYp,accumReconYp);
-  GENERIC_STENCIL_LEG(Zm,spProjZp,accumReconZp);
-  GENERIC_STENCIL_LEG(Tm,spProjTp,accumReconTp);
-  GENERIC_STENCIL_LEG(Xp,spProjXm,accumReconXm);
-  GENERIC_STENCIL_LEG(Yp,spProjYm,accumReconYm);
-  GENERIC_STENCIL_LEG(Zp,spProjZm,accumReconZm);
-  GENERIC_STENCIL_LEG(Tp,spProjTm,accumReconTm);
-  coalescedWrite(out[sF], result,lane);
+//  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0]))  calcSpinor;
+//  calcHalfSpinor chi;
+//  //  calcHalfSpinor *chi_p;
+//  calcHalfSpinor Uchi;
+//  calcSpinor result;
+//  StencilEntry *SE;
+//  int ptype;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  GENERIC_STENCIL_LEG(Xm,spProjXp,spReconXp);
+//  GENERIC_STENCIL_LEG(Ym,spProjYp,accumReconYp);
+//  GENERIC_STENCIL_LEG(Zm,spProjZp,accumReconZp);
+//  GENERIC_STENCIL_LEG(Tm,spProjTp,accumReconTp);
+//  GENERIC_STENCIL_LEG(Xp,spProjXm,accumReconXm);
+//  GENERIC_STENCIL_LEG(Yp,spProjYm,accumReconYm);
+//  GENERIC_STENCIL_LEG(Zp,spProjZm,accumReconZm);
+//  GENERIC_STENCIL_LEG(Tp,spProjTm,accumReconTm);
+//  coalescedWrite(out[sF], result,lane);
 };
   ////////////////////////////////////////////////////////////////////
   // Interior kernels
@@ -169,27 +169,27 @@ void WilsonKernels<Impl>::GenericDhopSiteDagInt(StencilView &st,  DoubledGaugeFi
 						SiteHalfSpinor *buf, int sF,
 						int sU, const FermionFieldView &in, FermionFieldView &out)
 {
-  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0]))  calcSpinor;
-  calcHalfSpinor chi;
-  //  calcHalfSpinor *chi_p;
-  calcHalfSpinor Uchi;
-  calcSpinor result;
-  StencilEntry *SE;
-  int ptype;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  result=Zero();
-  GENERIC_STENCIL_LEG_INT(Xp,spProjXp,accumReconXp);
-  GENERIC_STENCIL_LEG_INT(Yp,spProjYp,accumReconYp);
-  GENERIC_STENCIL_LEG_INT(Zp,spProjZp,accumReconZp);
-  GENERIC_STENCIL_LEG_INT(Tp,spProjTp,accumReconTp);
-  GENERIC_STENCIL_LEG_INT(Xm,spProjXm,accumReconXm);
-  GENERIC_STENCIL_LEG_INT(Ym,spProjYm,accumReconYm);
-  GENERIC_STENCIL_LEG_INT(Zm,spProjZm,accumReconZm);
-  GENERIC_STENCIL_LEG_INT(Tm,spProjTm,accumReconTm);
-  coalescedWrite(out[sF], result,lane);
+//  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0]))  calcSpinor;
+//  calcHalfSpinor chi;
+//  //  calcHalfSpinor *chi_p;
+//  calcHalfSpinor Uchi;
+//  calcSpinor result;
+//  StencilEntry *SE;
+//  int ptype;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  result=Zero();
+//  GENERIC_STENCIL_LEG_INT(Xp,spProjXp,accumReconXp);
+//  GENERIC_STENCIL_LEG_INT(Yp,spProjYp,accumReconYp);
+//  GENERIC_STENCIL_LEG_INT(Zp,spProjZp,accumReconZp);
+//  GENERIC_STENCIL_LEG_INT(Tp,spProjTp,accumReconTp);
+//  GENERIC_STENCIL_LEG_INT(Xm,spProjXm,accumReconXm);
+//  GENERIC_STENCIL_LEG_INT(Ym,spProjYm,accumReconYm);
+//  GENERIC_STENCIL_LEG_INT(Zm,spProjZm,accumReconZm);
+//  GENERIC_STENCIL_LEG_INT(Tm,spProjTm,accumReconTm);
+//  coalescedWrite(out[sF], result,lane);
 };
 
 template <class Impl> accelerator_inline
@@ -197,27 +197,27 @@ void WilsonKernels<Impl>::GenericDhopSiteInt(StencilView &st,  DoubledGaugeField
 							 SiteHalfSpinor *buf, int sF,
 							 int sU, const FermionFieldView &in, FermionFieldView &out)
 {
-  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0]))  calcSpinor;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  calcHalfSpinor chi;
-  //  calcHalfSpinor *chi_p;
-  calcHalfSpinor Uchi;
-  calcSpinor result;
-  StencilEntry *SE;
-  int ptype;
-  result=Zero();
-  GENERIC_STENCIL_LEG_INT(Xm,spProjXp,accumReconXp);
-  GENERIC_STENCIL_LEG_INT(Ym,spProjYp,accumReconYp);
-  GENERIC_STENCIL_LEG_INT(Zm,spProjZp,accumReconZp);
-  GENERIC_STENCIL_LEG_INT(Tm,spProjTp,accumReconTp);
-  GENERIC_STENCIL_LEG_INT(Xp,spProjXm,accumReconXm);
-  GENERIC_STENCIL_LEG_INT(Yp,spProjYm,accumReconYm);
-  GENERIC_STENCIL_LEG_INT(Zp,spProjZm,accumReconZm);
-  GENERIC_STENCIL_LEG_INT(Tp,spProjTm,accumReconTm);
-  coalescedWrite(out[sF], result,lane);
+//  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0]))  calcSpinor;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  calcHalfSpinor chi;
+//  //  calcHalfSpinor *chi_p;
+//  calcHalfSpinor Uchi;
+//  calcSpinor result;
+//  StencilEntry *SE;
+//  int ptype;
+//  result=Zero();
+//  GENERIC_STENCIL_LEG_INT(Xm,spProjXp,accumReconXp);
+//  GENERIC_STENCIL_LEG_INT(Ym,spProjYp,accumReconYp);
+//  GENERIC_STENCIL_LEG_INT(Zm,spProjZp,accumReconZp);
+//  GENERIC_STENCIL_LEG_INT(Tm,spProjTp,accumReconTp);
+//  GENERIC_STENCIL_LEG_INT(Xp,spProjXm,accumReconXm);
+//  GENERIC_STENCIL_LEG_INT(Yp,spProjYm,accumReconYm);
+//  GENERIC_STENCIL_LEG_INT(Zp,spProjZm,accumReconZm);
+//  GENERIC_STENCIL_LEG_INT(Tp,spProjTm,accumReconTm);
+//  coalescedWrite(out[sF], result,lane);
 };
 ////////////////////////////////////////////////////////////////////
 // Exterior kernels
@@ -227,30 +227,30 @@ void WilsonKernels<Impl>::GenericDhopSiteDagExt(StencilView &st,  DoubledGaugeFi
 						SiteHalfSpinor *buf, int sF,
 						int sU, const FermionFieldView &in, FermionFieldView &out)
 {
-  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0]))  calcSpinor;
-  //  calcHalfSpinor *chi_p;
-  calcHalfSpinor Uchi;
-  calcSpinor result;
-  StencilEntry *SE;
-  int ptype;
-  int nmu=0;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  result=Zero();
-  GENERIC_STENCIL_LEG_EXT(Xp,spProjXp,accumReconXp);
-  GENERIC_STENCIL_LEG_EXT(Yp,spProjYp,accumReconYp);
-  GENERIC_STENCIL_LEG_EXT(Zp,spProjZp,accumReconZp);
-  GENERIC_STENCIL_LEG_EXT(Tp,spProjTp,accumReconTp);
-  GENERIC_STENCIL_LEG_EXT(Xm,spProjXm,accumReconXm);
-  GENERIC_STENCIL_LEG_EXT(Ym,spProjYm,accumReconYm);
-  GENERIC_STENCIL_LEG_EXT(Zm,spProjZm,accumReconZm);
-  GENERIC_STENCIL_LEG_EXT(Tm,spProjTm,accumReconTm);
-  if ( nmu ) {
-    auto out_t = coalescedRead(out[sF],lane);
-    out_t = out_t + result;
-    coalescedWrite(out[sF],out_t,lane);
-  }
+//  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0]))  calcSpinor;
+//  //  calcHalfSpinor *chi_p;
+//  calcHalfSpinor Uchi;
+//  calcSpinor result;
+//  StencilEntry *SE;
+//  int ptype;
+//  int nmu=0;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  result=Zero();
+//  GENERIC_STENCIL_LEG_EXT(Xp,spProjXp,accumReconXp);
+//  GENERIC_STENCIL_LEG_EXT(Yp,spProjYp,accumReconYp);
+//  GENERIC_STENCIL_LEG_EXT(Zp,spProjZp,accumReconZp);
+//  GENERIC_STENCIL_LEG_EXT(Tp,spProjTp,accumReconTp);
+//  GENERIC_STENCIL_LEG_EXT(Xm,spProjXm,accumReconXm);
+//  GENERIC_STENCIL_LEG_EXT(Ym,spProjYm,accumReconYm);
+//  GENERIC_STENCIL_LEG_EXT(Zm,spProjZm,accumReconZm);
+//  GENERIC_STENCIL_LEG_EXT(Tm,spProjTm,accumReconTm);
+//  if ( nmu ) {
+//    auto out_t = coalescedRead(out[sF],lane);
+//    out_t = out_t + result;
+//    coalescedWrite(out[sF],out_t,lane);
+//  }
 };
 
 template <class Impl> accelerator_inline
@@ -258,30 +258,30 @@ void WilsonKernels<Impl>::GenericDhopSiteExt(StencilView &st,  DoubledGaugeField
 					     SiteHalfSpinor *buf, int sF,
 					     int sU, const FermionFieldView &in, FermionFieldView &out)
 {
-  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0]))  calcSpinor;
-  //  calcHalfSpinor *chi_p;
-  calcHalfSpinor Uchi;
-  calcSpinor result;
-  StencilEntry *SE;
-  int ptype;
-  int nmu=0;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  result=Zero();
-  GENERIC_STENCIL_LEG_EXT(Xm,spProjXp,accumReconXp);
-  GENERIC_STENCIL_LEG_EXT(Ym,spProjYp,accumReconYp);
-  GENERIC_STENCIL_LEG_EXT(Zm,spProjZp,accumReconZp);
-  GENERIC_STENCIL_LEG_EXT(Tm,spProjTp,accumReconTp);
-  GENERIC_STENCIL_LEG_EXT(Xp,spProjXm,accumReconXm);
-  GENERIC_STENCIL_LEG_EXT(Yp,spProjYm,accumReconYm);
-  GENERIC_STENCIL_LEG_EXT(Zp,spProjZm,accumReconZm);
-  GENERIC_STENCIL_LEG_EXT(Tp,spProjTm,accumReconTm);
-  if ( nmu ) {
-    auto out_t = coalescedRead(out[sF],lane);
-    out_t = out_t + result;
-    coalescedWrite(out[sF],out_t,lane);
-  }
+//  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0]))  calcSpinor;
+//  //  calcHalfSpinor *chi_p;
+//  calcHalfSpinor Uchi;
+//  calcSpinor result;
+//  StencilEntry *SE;
+//  int ptype;
+//  int nmu=0;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  result=Zero();
+//  GENERIC_STENCIL_LEG_EXT(Xm,spProjXp,accumReconXp);
+//  GENERIC_STENCIL_LEG_EXT(Ym,spProjYp,accumReconYp);
+//  GENERIC_STENCIL_LEG_EXT(Zm,spProjZp,accumReconZp);
+//  GENERIC_STENCIL_LEG_EXT(Tm,spProjTp,accumReconTp);
+//  GENERIC_STENCIL_LEG_EXT(Xp,spProjXm,accumReconXm);
+//  GENERIC_STENCIL_LEG_EXT(Yp,spProjYm,accumReconYm);
+//  GENERIC_STENCIL_LEG_EXT(Zp,spProjZm,accumReconZm);
+//  GENERIC_STENCIL_LEG_EXT(Tp,spProjTm,accumReconTm);
+//  if ( nmu ) {
+//    auto out_t = coalescedRead(out[sF],lane);
+//    out_t = out_t + result;
+//    coalescedWrite(out[sF],out_t,lane);
+//  }
 };
 
 #define DhopDirMacro(Dir,spProj,spRecon)	\
@@ -317,57 +317,57 @@ template <class Impl> accelerator_inline
 void WilsonKernels<Impl>::DhopDirK( StencilView &st, DoubledGaugeFieldView &U,SiteHalfSpinor *buf, int sF,
 				    int sU, const FermionFieldView &in, FermionFieldView &out, int dir, int gamma)
 {
-  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
-  typedef decltype(coalescedRead(in[0]))  calcSpinor;
-  calcHalfSpinor chi;
-  calcSpinor result;
-  calcHalfSpinor Uchi;
-  StencilEntry *SE;
-  int ptype;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  SE = st.GetEntry(ptype, dir, sF);
-  GENERIC_DHOPDIR_LEG(Xp,spProjXp,spReconXp);
-  GENERIC_DHOPDIR_LEG(Yp,spProjYp,spReconYp);
-  GENERIC_DHOPDIR_LEG(Zp,spProjZp,spReconZp);
-  GENERIC_DHOPDIR_LEG(Tp,spProjTp,spReconTp);
-  GENERIC_DHOPDIR_LEG(Xm,spProjXm,spReconXm);
-  GENERIC_DHOPDIR_LEG(Ym,spProjYm,spReconYm);
-  GENERIC_DHOPDIR_LEG(Zm,spProjZm,spReconZm);
-  GENERIC_DHOPDIR_LEG(Tm,spProjTm,spReconTm);
-  coalescedWrite(out[sF], result,lane);
+//  typedef decltype(coalescedRead(buf[0])) calcHalfSpinor;
+//  typedef decltype(coalescedRead(in[0]))  calcSpinor;
+//  calcHalfSpinor chi;
+//  calcSpinor result;
+//  calcHalfSpinor Uchi;
+//  StencilEntry *SE;
+//  int ptype;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  SE = st.GetEntry(ptype, dir, sF);
+//  GENERIC_DHOPDIR_LEG(Xp,spProjXp,spReconXp);
+//  GENERIC_DHOPDIR_LEG(Yp,spProjYp,spReconYp);
+//  GENERIC_DHOPDIR_LEG(Zp,spProjZp,spReconZp);
+//  GENERIC_DHOPDIR_LEG(Tp,spProjTp,spReconTp);
+//  GENERIC_DHOPDIR_LEG(Xm,spProjXm,spReconXm);
+//  GENERIC_DHOPDIR_LEG(Ym,spProjYm,spReconYm);
+//  GENERIC_DHOPDIR_LEG(Zm,spProjZm,spReconZm);
+//  GENERIC_DHOPDIR_LEG(Tm,spProjTm,spReconTm);
+//  coalescedWrite(out[sF], result,lane);
 }
 
 template <class Impl>
 void WilsonKernels<Impl>::DhopDirAll( StencilImpl &st, DoubledGaugeField &U,SiteHalfSpinor *buf, int Ls,
 				      int Nsite, const FermionField &in, std::vector<FermionField> &out)
 {
-   autoView(U_v  ,U,AcceleratorRead);
-   autoView(in_v ,in,AcceleratorRead);
-   autoView(st_v ,st,AcceleratorRead);
-
-   autoView(out_Xm,out[0],AcceleratorWrite);
-   autoView(out_Ym,out[1],AcceleratorWrite);
-   autoView(out_Zm,out[2],AcceleratorWrite);
-   autoView(out_Tm,out[3],AcceleratorWrite);
-   autoView(out_Xp,out[4],AcceleratorWrite);
-   autoView(out_Yp,out[5],AcceleratorWrite);
-   autoView(out_Zp,out[6],AcceleratorWrite);
-   autoView(out_Tp,out[7],AcceleratorWrite);
-   auto CBp=st.CommBuf();
-   accelerator_for(sss,Nsite*Ls,Simd::Nsimd(),{
-      int sU=sss/Ls;
-      int sF =sss;
-      DhopDirXm(st_v,U_v,CBp,sF,sU,in_v,out_Xm,0);
-      DhopDirYm(st_v,U_v,CBp,sF,sU,in_v,out_Ym,1);
-      DhopDirZm(st_v,U_v,CBp,sF,sU,in_v,out_Zm,2);
-      DhopDirTm(st_v,U_v,CBp,sF,sU,in_v,out_Tm,3);
-      DhopDirXp(st_v,U_v,CBp,sF,sU,in_v,out_Xp,4);
-      DhopDirYp(st_v,U_v,CBp,sF,sU,in_v,out_Yp,5);
-      DhopDirZp(st_v,U_v,CBp,sF,sU,in_v,out_Zp,6);
-      DhopDirTp(st_v,U_v,CBp,sF,sU,in_v,out_Tp,7);
-   });
+//   autoView(U_v  ,U,AcceleratorRead);
+//   autoView(in_v ,in,AcceleratorRead);
+//   autoView(st_v ,st,AcceleratorRead);
+//
+//   autoView(out_Xm,out[0],AcceleratorWrite);
+//   autoView(out_Ym,out[1],AcceleratorWrite);
+//   autoView(out_Zm,out[2],AcceleratorWrite);
+//   autoView(out_Tm,out[3],AcceleratorWrite);
+//   autoView(out_Xp,out[4],AcceleratorWrite);
+//   autoView(out_Yp,out[5],AcceleratorWrite);
+//   autoView(out_Zp,out[6],AcceleratorWrite);
+//   autoView(out_Tp,out[7],AcceleratorWrite);
+//   auto CBp=st.CommBuf();
+//   accelerator_for(sss,Nsite*Ls,Simd::Nsimd(),{
+//      int sU=sss/Ls;
+//      int sF =sss;
+//      DhopDirXm(st_v,U_v,CBp,sF,sU,in_v,out_Xm,0);
+//      DhopDirYm(st_v,U_v,CBp,sF,sU,in_v,out_Ym,1);
+//      DhopDirZm(st_v,U_v,CBp,sF,sU,in_v,out_Zm,2);
+//      DhopDirTm(st_v,U_v,CBp,sF,sU,in_v,out_Tm,3);
+//      DhopDirXp(st_v,U_v,CBp,sF,sU,in_v,out_Xp,4);
+//      DhopDirYp(st_v,U_v,CBp,sF,sU,in_v,out_Yp,5);
+//      DhopDirZp(st_v,U_v,CBp,sF,sU,in_v,out_Zp,6);
+//      DhopDirTp(st_v,U_v,CBp,sF,sU,in_v,out_Tp,7);
+//   });
 }
 
 
@@ -375,40 +375,40 @@ template <class Impl>
 void WilsonKernels<Impl>::DhopDirKernel( StencilImpl &st, DoubledGaugeField &U,SiteHalfSpinor *buf, int Ls,
 					 int Nsite, const FermionField &in, FermionField &out, int dirdisp, int gamma)
 {
-  assert(dirdisp<=7);
-  assert(dirdisp>=0);
-
-   autoView(U_v  ,U  ,AcceleratorRead);
-   autoView(in_v ,in ,AcceleratorRead);
-   autoView(out_v,out,AcceleratorWrite);
-   autoView(st_v ,st ,AcceleratorRead);
-   auto CBp=st.CommBuf();
-#define LoopBody(Dir)				\
-   case Dir :					\
-     accelerator_for(ss,Nsite,Simd::Nsimd(),{	\
-       for(int s=0;s<Ls;s++){			\
-	 int sU=ss;				\
-	 int sF = s+Ls*sU;						\
-	 DhopDir##Dir(st_v,U_v,CBp,sF,sU,in_v,out_v,dirdisp);\
-       }							       \
-       });							       \
-     break;
-
-   switch(gamma){
-   LoopBody(Xp);
-   LoopBody(Yp);
-   LoopBody(Zp);
-   LoopBody(Tp);
-
-   LoopBody(Xm);
-   LoopBody(Ym);
-   LoopBody(Zm);
-   LoopBody(Tm);
-   default:
-     assert(0);
-     break;
-   }
-#undef LoopBody
+//  assert(dirdisp<=7);
+//  assert(dirdisp>=0);
+//
+//   autoView(U_v  ,U  ,AcceleratorRead);
+//   autoView(in_v ,in ,AcceleratorRead);
+//   autoView(out_v,out,AcceleratorWrite);
+//   autoView(st_v ,st ,AcceleratorRead);
+//   auto CBp=st.CommBuf();
+//#define LoopBody(Dir)				\
+//   case Dir :					\
+//     accelerator_for(ss,Nsite,Simd::Nsimd(),{	\
+//       for(int s=0;s<Ls;s++){			\
+//	 int sU=ss;				\
+//	 int sF = s+Ls*sU;						\
+//	 DhopDir##Dir(st_v,U_v,CBp,sF,sU,in_v,out_v,dirdisp);\
+//       }							       \
+//       });							       \
+//     break;
+//
+//   switch(gamma){
+//   LoopBody(Xp);
+//   LoopBody(Yp);
+//   LoopBody(Zp);
+//   LoopBody(Tp);
+//
+//   LoopBody(Xm);
+//   LoopBody(Ym);
+//   LoopBody(Zm);
+//   LoopBody(Tm);
+//   default:
+//     assert(0);
+//     break;
+//   }
+//#undef LoopBody
 }
 
 
@@ -456,66 +456,66 @@ void WilsonKernels<Impl>::DhopKernel(int Opt,StencilImpl &st,  DoubledGaugeField
 				     int Ls, int Nsite, const FermionField &in, FermionField &out,
 				     int interior,int exterior)
 {
-    autoView(U_v  ,  U,AcceleratorRead);
-    autoView(in_v , in,AcceleratorRead);
-    autoView(out_v,out,AcceleratorWrite);
-    autoView(st_v , st,AcceleratorRead);
-
-   if( interior && exterior ) {
-     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL(GenericDhopSite); return;}
-     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL(HandDhopSite);    return;}
-#ifndef GRID_CUDA
-     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSite);    return;}
-#endif
-   } else if( interior ) {
-     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALLNB(GenericDhopSiteInt); return;}
-     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALLNB(HandDhopSiteInt);    return;}
-#ifndef GRID_CUDA
-     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteInt);    return;}
-#endif
-   } else if( exterior ) {
-     // dependent on result of merge
-     acceleratorFenceComputeStream();
-     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL_EXT(GenericDhopSiteExt); return;}
-     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL_EXT(HandDhopSiteExt);    return;}
-#ifndef GRID_CUDA
-     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteExt);    return;}
-#endif
-   }
-   assert(0 && " Kernel optimisation case not covered ");
+//    autoView(U_v  ,  U,AcceleratorRead);
+//    autoView(in_v , in,AcceleratorRead);
+//    autoView(out_v,out,AcceleratorWrite);
+//    autoView(st_v , st,AcceleratorRead);
+//
+//   if( interior && exterior ) {
+//     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL(GenericDhopSite); return;}
+//     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL(HandDhopSite);    return;}
+//#ifndef GRID_CUDA
+//     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSite);    return;}
+//#endif
+//   } else if( interior ) {
+//     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALLNB(GenericDhopSiteInt); return;}
+//     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALLNB(HandDhopSiteInt);    return;}
+//#ifndef GRID_CUDA
+//     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteInt);    return;}
+//#endif
+//   } else if( exterior ) {
+//     // dependent on result of merge
+//     acceleratorFenceComputeStream();
+//     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL_EXT(GenericDhopSiteExt); return;}
+//     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL_EXT(HandDhopSiteExt);    return;}
+//#ifndef GRID_CUDA
+//     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteExt);    return;}
+//#endif
+//   }
+//   assert(0 && " Kernel optimisation case not covered ");
   }
   template <class Impl>
   void WilsonKernels<Impl>::DhopDagKernel(int Opt,StencilImpl &st,  DoubledGaugeField &U, SiteHalfSpinor * buf,
 					  int Ls, int Nsite, const FermionField &in, FermionField &out,
 					  int interior,int exterior)
   {
-    autoView(U_v  ,U,AcceleratorRead);
-    autoView(in_v ,in,AcceleratorRead);
-    autoView(out_v,out,AcceleratorWrite);
-    autoView(st_v ,st,AcceleratorRead);
-
-   if( interior && exterior ) {
-     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL(GenericDhopSiteDag); return;}
-     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL(HandDhopSiteDag);    return;}
-#ifndef GRID_CUDA
-     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteDag);     return;}
-#endif
-   } else if( interior ) {
-     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALLNB(GenericDhopSiteDagInt); return;}
-     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALLNB(HandDhopSiteDagInt);    return;}
-#ifndef GRID_CUDA
-     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteDagInt);     return;}
-#endif
-   } else if( exterior ) {
-     // Dependent on result of merge
-     acceleratorFenceComputeStream();
-     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL_EXT(GenericDhopSiteDagExt); return;}
-     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL_EXT(HandDhopSiteDagExt);    return;}
-#ifndef GRID_CUDA
-     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteDagExt);     return;}
-#endif
-   }
-   assert(0 && " Kernel optimisation case not covered ");
+//    autoView(U_v  ,U,AcceleratorRead);
+//    autoView(in_v ,in,AcceleratorRead);
+//    autoView(out_v,out,AcceleratorWrite);
+//    autoView(st_v ,st,AcceleratorRead);
+//
+//   if( interior && exterior ) {
+//     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL(GenericDhopSiteDag); return;}
+//     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL(HandDhopSiteDag);    return;}
+//#ifndef GRID_CUDA
+//     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteDag);     return;}
+//#endif
+//   } else if( interior ) {
+//     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALLNB(GenericDhopSiteDagInt); return;}
+//     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALLNB(HandDhopSiteDagInt);    return;}
+//#ifndef GRID_CUDA
+//     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteDagInt);     return;}
+//#endif
+//   } else if( exterior ) {
+//     // Dependent on result of merge
+//     acceleratorFenceComputeStream();
+//     if (Opt == WilsonKernelsStatic::OptGeneric    ) { KERNEL_CALL_EXT(GenericDhopSiteDagExt); return;}
+//     if (Opt == WilsonKernelsStatic::OptHandUnroll ) { KERNEL_CALL_EXT(HandDhopSiteDagExt);    return;}
+//#ifndef GRID_CUDA
+//     if (Opt == WilsonKernelsStatic::OptInlineAsm  ) {  ASM_CALL(AsmDhopSiteDagExt);     return;}
+//#endif
+//   }
+//   assert(0 && " Kernel optimisation case not covered ");
   }
 
 #undef KERNEL_CALLNB

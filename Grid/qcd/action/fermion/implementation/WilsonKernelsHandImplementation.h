@@ -554,28 +554,28 @@ template<class Impl> accelerator_inline void
 WilsonKernels<Impl>::HandDhopSiteSycl(StencilVector st_perm,StencilEntry *st_p, SiteDoubledGaugeField *U,SiteHalfSpinor  *buf,
 				      int ss,int sU,const SiteSpinor *in, SiteSpinor *out)
 {
-// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef iSinglet<Simd> vCplx;
-  //  typedef decltype( coalescedRead( vCplx()()() )) Simt;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  StencilEntry *SE;
-  HAND_STENCIL_LEG(XM_PROJ,3,Xp,XM_RECON);
-  HAND_STENCIL_LEG(YM_PROJ,2,Yp,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG(TM_PROJ,0,Tp,TM_RECON_ACCUM);
-  HAND_STENCIL_LEG(XP_PROJ,3,Xm,XP_RECON_ACCUM);
-  HAND_STENCIL_LEG(YP_PROJ,2,Ym,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG(TP_PROJ,0,Tm,TP_RECON_ACCUM);
-  HAND_RESULT(ss);
+//// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef iSinglet<Simd> vCplx;
+//  //  typedef decltype( coalescedRead( vCplx()()() )) Simt;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  StencilEntry *SE;
+//  HAND_STENCIL_LEG(XM_PROJ,3,Xp,XM_RECON);
+//  HAND_STENCIL_LEG(YM_PROJ,2,Yp,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(TM_PROJ,0,Tp,TM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(XP_PROJ,3,Xm,XP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(YP_PROJ,2,Ym,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(TP_PROJ,0,Tm,TP_RECON_ACCUM);
+//  HAND_RESULT(ss);
 }
 #endif
 
@@ -583,173 +583,173 @@ template<class Impl> accelerator_inline void
 WilsonKernels<Impl>::HandDhopSite(StencilView &st, DoubledGaugeFieldView &U,SiteHalfSpinor  *buf,
 				  int ss,int sU,const FermionFieldView &in, FermionFieldView &out)
 {
-  auto st_p = st._entries_p;						
-  auto st_perm = st._permute_type;					
-// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  StencilEntry *SE;
-  HAND_STENCIL_LEG(XM_PROJ,3,Xp,XM_RECON);
-  HAND_STENCIL_LEG(YM_PROJ,2,Yp,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG(TM_PROJ,0,Tp,TM_RECON_ACCUM);
-  HAND_STENCIL_LEG(XP_PROJ,3,Xm,XP_RECON_ACCUM);
-  HAND_STENCIL_LEG(YP_PROJ,2,Ym,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG(TP_PROJ,0,Tm,TP_RECON_ACCUM);
-  HAND_RESULT(ss);
+//  auto st_p = st._entries_p;						
+//  auto st_perm = st._permute_type;					
+//// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  StencilEntry *SE;
+//  HAND_STENCIL_LEG(XM_PROJ,3,Xp,XM_RECON);
+//  HAND_STENCIL_LEG(YM_PROJ,2,Yp,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(TM_PROJ,0,Tp,TM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(XP_PROJ,3,Xm,XP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(YP_PROJ,2,Ym,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(TP_PROJ,0,Tm,TP_RECON_ACCUM);
+//  HAND_RESULT(ss);
 }
 
 template<class Impl>  accelerator_inline
 void WilsonKernels<Impl>::HandDhopSiteDag(StencilView &st,DoubledGaugeFieldView &U,SiteHalfSpinor *buf,
 					  int ss,int sU,const FermionFieldView &in, FermionFieldView &out)
 {
-  auto st_p = st._entries_p;						
-  auto st_perm = st._permute_type;					
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  StencilEntry *SE;
-  HAND_STENCIL_LEG(XP_PROJ,3,Xp,XP_RECON);
-  HAND_STENCIL_LEG(YP_PROJ,2,Yp,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG(ZP_PROJ,1,Zp,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG(TP_PROJ,0,Tp,TP_RECON_ACCUM);
-  HAND_STENCIL_LEG(XM_PROJ,3,Xm,XM_RECON_ACCUM);
-  HAND_STENCIL_LEG(YM_PROJ,2,Ym,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG(ZM_PROJ,1,Zm,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG(TM_PROJ,0,Tm,TM_RECON_ACCUM);
-  HAND_RESULT(ss);
+//  auto st_p = st._entries_p;						
+//  auto st_perm = st._permute_type;					
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  StencilEntry *SE;
+//  HAND_STENCIL_LEG(XP_PROJ,3,Xp,XP_RECON);
+//  HAND_STENCIL_LEG(YP_PROJ,2,Yp,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(ZP_PROJ,1,Zp,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(TP_PROJ,0,Tp,TP_RECON_ACCUM);
+//  HAND_STENCIL_LEG(XM_PROJ,3,Xm,XM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(YM_PROJ,2,Ym,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(ZM_PROJ,1,Zm,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG(TM_PROJ,0,Tm,TM_RECON_ACCUM);
+//  HAND_RESULT(ss);
 }
 
 template<class Impl>  accelerator_inline void 
 WilsonKernels<Impl>::HandDhopSiteInt(StencilView &st,DoubledGaugeFieldView &U,SiteHalfSpinor  *buf,
 					  int ss,int sU,const FermionFieldView &in, FermionFieldView &out)
 {
-  //  auto st_p = st._entries_p;						
-  //  auto st_perm = st._permute_type;					
-// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  StencilEntry *SE;
-  ZERO_RESULT;
-  HAND_STENCIL_LEG_INT(XM_PROJ,3,Xp,XM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(YM_PROJ,2,Yp,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(TM_PROJ,0,Tp,TM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(XP_PROJ,3,Xm,XP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(YP_PROJ,2,Ym,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(TP_PROJ,0,Tm,TP_RECON_ACCUM);
-  HAND_RESULT(ss);
+//  //  auto st_p = st._entries_p;						
+//  //  auto st_perm = st._permute_type;					
+//// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  StencilEntry *SE;
+//  ZERO_RESULT;
+//  HAND_STENCIL_LEG_INT(XM_PROJ,3,Xp,XM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(YM_PROJ,2,Yp,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(TM_PROJ,0,Tp,TM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(XP_PROJ,3,Xm,XP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(YP_PROJ,2,Ym,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(TP_PROJ,0,Tm,TP_RECON_ACCUM);
+//  HAND_RESULT(ss);
 }
 
 template<class Impl> accelerator_inline
 void WilsonKernels<Impl>::HandDhopSiteDagInt(StencilView &st,DoubledGaugeFieldView &U,SiteHalfSpinor *buf,
 						  int ss,int sU,const FermionFieldView &in, FermionFieldView &out)
 {
-  //  auto st_p = st._entries_p;						
-  //  auto st_perm = st._permute_type;					
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  StencilEntry *SE;
-  ZERO_RESULT;
-  HAND_STENCIL_LEG_INT(XP_PROJ,3,Xp,XP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(YP_PROJ,2,Yp,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(ZP_PROJ,1,Zp,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(TP_PROJ,0,Tp,TP_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(XM_PROJ,3,Xm,XM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(YM_PROJ,2,Ym,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(ZM_PROJ,1,Zm,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG_INT(TM_PROJ,0,Tm,TM_RECON_ACCUM);
-  HAND_RESULT(ss);
+//  //  auto st_p = st._entries_p;						
+//  //  auto st_perm = st._permute_type;					
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  StencilEntry *SE;
+//  ZERO_RESULT;
+//  HAND_STENCIL_LEG_INT(XP_PROJ,3,Xp,XP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(YP_PROJ,2,Yp,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(ZP_PROJ,1,Zp,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(TP_PROJ,0,Tp,TP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(XM_PROJ,3,Xm,XM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(YM_PROJ,2,Ym,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(ZM_PROJ,1,Zm,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_INT(TM_PROJ,0,Tm,TM_RECON_ACCUM);
+//  HAND_RESULT(ss);
 }
 
 template<class Impl>  accelerator_inline void 
 WilsonKernels<Impl>::HandDhopSiteExt(StencilView &st,DoubledGaugeFieldView &U,SiteHalfSpinor  *buf,
 					  int ss,int sU,const FermionFieldView &in, FermionFieldView &out)
 {
-  //  auto st_p = st._entries_p;						
-  //  auto st_perm = st._permute_type;					
-// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  //  int offset, ptype;
-  StencilEntry *SE;
-  int nmu=0;
-  ZERO_RESULT;
-  HAND_STENCIL_LEG_EXT(XM_PROJ,3,Xp,XM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(YM_PROJ,2,Yp,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(TM_PROJ,0,Tp,TM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(XP_PROJ,3,Xm,XP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(YP_PROJ,2,Ym,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(TP_PROJ,0,Tm,TP_RECON_ACCUM);
-  HAND_RESULT_EXT(ss);
+//  //  auto st_p = st._entries_p;						
+//  //  auto st_perm = st._permute_type;					
+//// T==0, Z==1, Y==2, Z==3 expect 1,2,2,2 simd layout etc...
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  //  int offset, ptype;
+//  StencilEntry *SE;
+//  int nmu=0;
+//  ZERO_RESULT;
+//  HAND_STENCIL_LEG_EXT(XM_PROJ,3,Xp,XM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(YM_PROJ,2,Yp,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(ZM_PROJ,1,Zp,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(TM_PROJ,0,Tp,TM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(XP_PROJ,3,Xm,XP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(YP_PROJ,2,Ym,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(ZP_PROJ,1,Zm,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(TP_PROJ,0,Tm,TP_RECON_ACCUM);
+//  HAND_RESULT_EXT(ss);
 }
 
 template<class Impl>  accelerator_inline
 void WilsonKernels<Impl>::HandDhopSiteDagExt(StencilView &st,DoubledGaugeFieldView &U,SiteHalfSpinor *buf,
 						  int ss,int sU,const FermionFieldView &in, FermionFieldView &out)
 {
-  //  auto st_p = st._entries_p;						
-  //  auto st_perm = st._permute_type;					
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  HAND_DECLARATIONS(Simt);
-
-  StencilEntry *SE;
-  //  int offset, ptype;
-  int nmu=0;
-  ZERO_RESULT;
-  HAND_STENCIL_LEG_EXT(XP_PROJ,3,Xp,XP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(YP_PROJ,2,Yp,YP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(ZP_PROJ,1,Zp,ZP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(TP_PROJ,0,Tp,TP_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(XM_PROJ,3,Xm,XM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(YM_PROJ,2,Ym,YM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(ZM_PROJ,1,Zm,ZM_RECON_ACCUM);
-  HAND_STENCIL_LEG_EXT(TM_PROJ,0,Tm,TM_RECON_ACCUM);
-  HAND_RESULT_EXT(ss);
+//  //  auto st_p = st._entries_p;						
+//  //  auto st_perm = st._permute_type;					
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//  typedef decltype( coalescedRead( in[0]()(0)(0) )) Simt;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  HAND_DECLARATIONS(Simt);
+//
+//  StencilEntry *SE;
+//  //  int offset, ptype;
+//  int nmu=0;
+//  ZERO_RESULT;
+//  HAND_STENCIL_LEG_EXT(XP_PROJ,3,Xp,XP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(YP_PROJ,2,Yp,YP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(ZP_PROJ,1,Zp,ZP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(TP_PROJ,0,Tp,TP_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(XM_PROJ,3,Xm,XM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(YM_PROJ,2,Ym,YM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(ZM_PROJ,1,Zm,ZM_RECON_ACCUM);
+//  HAND_STENCIL_LEG_EXT(TM_PROJ,0,Tm,TM_RECON_ACCUM);
+//  HAND_RESULT_EXT(ss);
 }
 
 ////////////// Wilson ; uses this implementation /////////////////////

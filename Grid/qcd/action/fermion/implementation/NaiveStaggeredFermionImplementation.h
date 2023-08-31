@@ -55,15 +55,15 @@ NaiveStaggeredFermion<Impl>::NaiveStaggeredFermion(GridCartesian &Fgrid, GridRed
     UmuOdd(&Hgrid),
     _tmp(&Hgrid)
 {
-  int vol4;
-  int LLs=1;
-  c1=_c1;
-  u0=_u0;
-  vol4= _grid->oSites();
-  Stencil.BuildSurfaceList(LLs,vol4);
-  vol4= _cbgrid->oSites();
-  StencilEven.BuildSurfaceList(LLs,vol4);
-  StencilOdd.BuildSurfaceList(LLs,vol4);
+//  int vol4;
+//  int LLs=1;
+//  c1=_c1;
+//  u0=_u0;
+//  vol4= _grid->oSites();
+//  Stencil.BuildSurfaceList(LLs,vol4);
+//  vol4= _cbgrid->oSites();
+//  StencilEven.BuildSurfaceList(LLs,vol4);
+//  StencilOdd.BuildSurfaceList(LLs,vol4);
 }
 
 template <class Impl>
@@ -73,7 +73,7 @@ NaiveStaggeredFermion<Impl>::NaiveStaggeredFermion(GaugeField &_U, GridCartesian
 						   const ImplParams &p)
   : NaiveStaggeredFermion(Fgrid,Hgrid,_mass,_c1,_u0,p)
 {
-  ImportGauge(_U);
+//  ImportGauge(_U);
 }
 
 ////////////////////////////////////////////////////////////
@@ -91,36 +91,36 @@ NaiveStaggeredFermion<Impl>::NaiveStaggeredFermion(GaugeField &_U, GridCartesian
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::CopyGaugeCheckerboards(void)
 {
-  pickCheckerboard(Even, UmuEven,  Umu);
-  pickCheckerboard(Odd,  UmuOdd ,  Umu);
+//  pickCheckerboard(Even, UmuEven,  Umu);
+//  pickCheckerboard(Odd,  UmuOdd ,  Umu);
 }
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::ImportGauge(const GaugeField &_U) 
 {
-  GaugeLinkField U(GaugeGrid());
-  DoubledGaugeField _UUU(GaugeGrid());
-  ////////////////////////////////////////////////////////
-  // Double Store should take two fields for Naik and one hop separately.
-  // Discard teh Naik as Naive
-  ////////////////////////////////////////////////////////
-  Impl::DoubleStore(GaugeGrid(), _UUU, Umu, _U, _U );
-
-  ////////////////////////////////////////////////////////
-  // Apply scale factors to get the right fermion Kinetic term
-  // Could pass coeffs into the double store to save work.
-  // 0.5 ( U p(x+mu) - Udag(x-mu) p(x-mu) ) 
-  ////////////////////////////////////////////////////////
-  for (int mu = 0; mu < Nd; mu++) {
-
-    U = PeekIndex<LorentzIndex>(Umu, mu);
-    PokeIndex<LorentzIndex>(Umu, U*( 0.5*c1/u0), mu );
-    
-    U = PeekIndex<LorentzIndex>(Umu, mu+4);
-    PokeIndex<LorentzIndex>(Umu, U*(-0.5*c1/u0), mu+4);
-
-  }
-
-  CopyGaugeCheckerboards();
+//  GaugeLinkField U(GaugeGrid());
+//  DoubledGaugeField _UUU(GaugeGrid());
+//  ////////////////////////////////////////////////////////
+//  // Double Store should take two fields for Naik and one hop separately.
+//  // Discard teh Naik as Naive
+//  ////////////////////////////////////////////////////////
+//  Impl::DoubleStore(GaugeGrid(), _UUU, Umu, _U, _U );
+//
+//  ////////////////////////////////////////////////////////
+//  // Apply scale factors to get the right fermion Kinetic term
+//  // Could pass coeffs into the double store to save work.
+//  // 0.5 ( U p(x+mu) - Udag(x-mu) p(x-mu) ) 
+//  ////////////////////////////////////////////////////////
+//  for (int mu = 0; mu < Nd; mu++) {
+//
+//    U = PeekIndex<LorentzIndex>(Umu, mu);
+//    PokeIndex<LorentzIndex>(Umu, U*( 0.5*c1/u0), mu );
+//    
+//    U = PeekIndex<LorentzIndex>(Umu, mu+4);
+//    PokeIndex<LorentzIndex>(Umu, U*(-0.5*c1/u0), mu+4);
+//
+//  }
+//
+//  CopyGaugeCheckerboards();
 }
 
 /////////////////////////////
@@ -129,59 +129,59 @@ void NaiveStaggeredFermion<Impl>::ImportGauge(const GaugeField &_U)
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::M(const FermionField &in, FermionField &out) {
-  out.Checkerboard() = in.Checkerboard();
-  Dhop(in, out, DaggerNo);
-  axpy(out, mass, in, out);
+//  out.Checkerboard() = in.Checkerboard();
+//  Dhop(in, out, DaggerNo);
+//  axpy(out, mass, in, out);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::Mdag(const FermionField &in, FermionField &out) {
-  out.Checkerboard() = in.Checkerboard();
-  Dhop(in, out, DaggerYes);
-  axpy(out, mass, in, out);
+//  out.Checkerboard() = in.Checkerboard();
+//  Dhop(in, out, DaggerYes);
+//  axpy(out, mass, in, out);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::Meooe(const FermionField &in, FermionField &out) {
-  if (in.Checkerboard() == Odd) {
-    DhopEO(in, out, DaggerNo);
-  } else {
-    DhopOE(in, out, DaggerNo);
-  }
+//  if (in.Checkerboard() == Odd) {
+//    DhopEO(in, out, DaggerNo);
+//  } else {
+//    DhopOE(in, out, DaggerNo);
+//  }
 }
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::MeooeDag(const FermionField &in, FermionField &out) {
-  if (in.Checkerboard() == Odd) {
-    DhopEO(in, out, DaggerYes);
-  } else {
-    DhopOE(in, out, DaggerYes);
-  }
+//  if (in.Checkerboard() == Odd) {
+//    DhopEO(in, out, DaggerYes);
+//  } else {
+//    DhopOE(in, out, DaggerYes);
+//  }
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::Mooee(const FermionField &in, FermionField &out) {
-  out.Checkerboard() = in.Checkerboard();
-  typename FermionField::scalar_type scal(mass);
-  out = scal * in;
+//  out.Checkerboard() = in.Checkerboard();
+//  typename FermionField::scalar_type scal(mass);
+//  out = scal * in;
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::MooeeDag(const FermionField &in, FermionField &out) {
-  out.Checkerboard() = in.Checkerboard();
-  Mooee(in, out);
+//  out.Checkerboard() = in.Checkerboard();
+//  Mooee(in, out);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::MooeeInv(const FermionField &in, FermionField &out) {
-  out.Checkerboard() = in.Checkerboard();
-  out = (1.0 / (mass)) * in;
+//  out.Checkerboard() = in.Checkerboard();
+//  out = (1.0 / (mass)) * in;
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::MooeeInvDag(const FermionField &in, FermionField &out) 
 {
-  out.Checkerboard() = in.Checkerboard();
-  MooeeInv(in, out);
+//  out.Checkerboard() = in.Checkerboard();
+//  MooeeInv(in, out);
 }
 
 ///////////////////////////////////
@@ -193,132 +193,132 @@ void NaiveStaggeredFermion<Impl>::DerivInternal(StencilImpl &st, DoubledGaugeFie
 						GaugeField & mat,
 						const FermionField &A, const FermionField &B, int dag) 
 {
-  assert((dag == DaggerNo) || (dag == DaggerYes));
-
-  Compressor compressor;
-
-  FermionField Btilde(B.Grid());
-  FermionField Atilde(B.Grid());
-  Atilde = A;
-
-  st.HaloExchange(B, compressor);
-
-  for (int mu = 0; mu < Nd; mu++) {
-
-    ////////////////////////
-    // Call the single hop
-    ////////////////////////
-    autoView( U_v      , U, CpuRead);
-    autoView( B_v      , B, CpuWrite);
-    autoView( Btilde_v , Btilde, CpuWrite);
-    thread_for(sss,B.Grid()->oSites(),{
-      Kernels::DhopDirKernel(st, U_v, U_v, st.CommBuf(), sss, sss, B_v, Btilde_v, mu,1);
-    });
-
-    assert(0);// need to figure out the force interface with a blasted three link term.
-    
-  }
+//  assert((dag == DaggerNo) || (dag == DaggerYes));
+//
+//  Compressor compressor;
+//
+//  FermionField Btilde(B.Grid());
+//  FermionField Atilde(B.Grid());
+//  Atilde = A;
+//
+//  st.HaloExchange(B, compressor);
+//
+//  for (int mu = 0; mu < Nd; mu++) {
+//
+//    ////////////////////////
+//    // Call the single hop
+//    ////////////////////////
+//    autoView( U_v      , U, CpuRead);
+//    autoView( B_v      , B, CpuWrite);
+//    autoView( Btilde_v , Btilde, CpuWrite);
+//    thread_for(sss,B.Grid()->oSites(),{
+//      Kernels::DhopDirKernel(st, U_v, U_v, st.CommBuf(), sss, sss, B_v, Btilde_v, mu,1);
+//    });
+//
+//    assert(0);// need to figure out the force interface with a blasted three link term.
+//    
+//  }
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopDeriv(GaugeField &mat, const FermionField &U, const FermionField &V, int dag) {
-
-  conformable(U.Grid(), _grid);
-  conformable(U.Grid(), V.Grid());
-  conformable(U.Grid(), mat.Grid());
-
-  mat.Checkerboard() = U.Checkerboard();
-
-  DerivInternal(Stencil, Umu, mat, U, V, dag);
+//
+//  conformable(U.Grid(), _grid);
+//  conformable(U.Grid(), V.Grid());
+//  conformable(U.Grid(), mat.Grid());
+//
+//  mat.Checkerboard() = U.Checkerboard();
+//
+//  DerivInternal(Stencil, Umu, mat, U, V, dag);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopDerivOE(GaugeField &mat, const FermionField &U, const FermionField &V, int dag) {
-
-  conformable(U.Grid(), _cbgrid);
-  conformable(U.Grid(), V.Grid());
-  conformable(U.Grid(), mat.Grid());
-
-  assert(V.Checkerboard() == Even);
-  assert(U.Checkerboard() == Odd);
-  mat.Checkerboard() = Odd;
-
-  DerivInternal(StencilEven, UmuOdd, mat, U, V, dag);
+//
+//  conformable(U.Grid(), _cbgrid);
+//  conformable(U.Grid(), V.Grid());
+//  conformable(U.Grid(), mat.Grid());
+//
+//  assert(V.Checkerboard() == Even);
+//  assert(U.Checkerboard() == Odd);
+//  mat.Checkerboard() = Odd;
+//
+//  DerivInternal(StencilEven, UmuOdd, mat, U, V, dag);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopDerivEO(GaugeField &mat, const FermionField &U, const FermionField &V, int dag) {
-
-  conformable(U.Grid(), _cbgrid);
-  conformable(U.Grid(), V.Grid());
-  conformable(U.Grid(), mat.Grid());
-
-  assert(V.Checkerboard() == Odd);
-  assert(U.Checkerboard() == Even);
-  mat.Checkerboard() = Even;
-
-  DerivInternal(StencilOdd, UmuEven, mat, U, V, dag);
+//
+//  conformable(U.Grid(), _cbgrid);
+//  conformable(U.Grid(), V.Grid());
+//  conformable(U.Grid(), mat.Grid());
+//
+//  assert(V.Checkerboard() == Odd);
+//  assert(U.Checkerboard() == Even);
+//  mat.Checkerboard() = Even;
+//
+//  DerivInternal(StencilOdd, UmuEven, mat, U, V, dag);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::Dhop(const FermionField &in, FermionField &out, int dag) 
 {
-  conformable(in.Grid(), _grid);  // verifies full grid
-  conformable(in.Grid(), out.Grid());
-
-  out.Checkerboard() = in.Checkerboard();
-
-  DhopInternal(Stencil, Lebesgue, Umu, in, out, dag);
+//  conformable(in.Grid(), _grid);  // verifies full grid
+//  conformable(in.Grid(), out.Grid());
+//
+//  out.Checkerboard() = in.Checkerboard();
+//
+//  DhopInternal(Stencil, Lebesgue, Umu, in, out, dag);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopOE(const FermionField &in, FermionField &out, int dag) 
 {
-  conformable(in.Grid(), _cbgrid);    // verifies half grid
-  conformable(in.Grid(), out.Grid());  // drops the cb check
-
-  assert(in.Checkerboard() == Even);
-  out.Checkerboard() = Odd;
-
-  DhopInternal(StencilEven, LebesgueEvenOdd, UmuOdd, in, out, dag);
+//  conformable(in.Grid(), _cbgrid);    // verifies half grid
+//  conformable(in.Grid(), out.Grid());  // drops the cb check
+//
+//  assert(in.Checkerboard() == Even);
+//  out.Checkerboard() = Odd;
+//
+//  DhopInternal(StencilEven, LebesgueEvenOdd, UmuOdd, in, out, dag);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopEO(const FermionField &in, FermionField &out, int dag) 
 {
-  conformable(in.Grid(), _cbgrid);    // verifies half grid
-  conformable(in.Grid(), out.Grid());  // drops the cb check
-
-  assert(in.Checkerboard() == Odd);
-  out.Checkerboard() = Even;
-
-  DhopInternal(StencilOdd, LebesgueEvenOdd, UmuEven, in, out, dag);
+//  conformable(in.Grid(), _cbgrid);    // verifies half grid
+//  conformable(in.Grid(), out.Grid());  // drops the cb check
+//
+//  assert(in.Checkerboard() == Odd);
+//  out.Checkerboard() = Even;
+//
+//  DhopInternal(StencilOdd, LebesgueEvenOdd, UmuEven, in, out, dag);
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::Mdir(const FermionField &in, FermionField &out, int dir, int disp) 
 {
-  DhopDir(in, out, dir, disp);
+//  DhopDir(in, out, dir, disp);
 }
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::MdirAll(const FermionField &in, std::vector<FermionField> &out) 
 {
-  assert(0); // Not implemented yet
+//  assert(0); // Not implemented yet
 }
 
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopDir(const FermionField &in, FermionField &out, int dir, int disp) 
 {
-
-  Compressor compressor;
-  Stencil.HaloExchange(in, compressor);
-  autoView( Umu_v   ,  Umu, CpuRead);
-  autoView( in_v    ,  in, CpuRead);
-  autoView( out_v   , out, CpuWrite);
-  //  thread_for( sss, in.Grid()->oSites(),{
-  //    Kernels::DhopDirKernel(Stencil, Umu_v, Stencil.CommBuf(), sss, sss, in_v, out_v, dir, disp);
-  //  });
-  assert(0);
+//
+//  Compressor compressor;
+//  Stencil.HaloExchange(in, compressor);
+//  autoView( Umu_v   ,  Umu, CpuRead);
+//  autoView( in_v    ,  in, CpuRead);
+//  autoView( out_v   , out, CpuWrite);
+//  //  thread_for( sss, in.Grid()->oSites(),{
+//  //    Kernels::DhopDirKernel(Stencil, Umu_v, Stencil.CommBuf(), sss, sss, in_v, out_v, dir, disp);
+//  //  });
+//  assert(0);
 };
 
 
@@ -328,10 +328,10 @@ void NaiveStaggeredFermion<Impl>::DhopInternal(StencilImpl &st, LebesgueOrder &l
 					       const FermionField &in,
 					       FermionField &out, int dag) 
 {
-  if ( StaggeredKernelsStatic::Comms == StaggeredKernelsStatic::CommsAndCompute )
-    DhopInternalOverlappedComms(st,lo,U,in,out,dag);
-  else
-    DhopInternalSerialComms(st,lo,U,in,out,dag);
+//  if ( StaggeredKernelsStatic::Comms == StaggeredKernelsStatic::CommsAndCompute )
+//    DhopInternalOverlappedComms(st,lo,U,in,out,dag);
+//  else
+//    DhopInternalSerialComms(st,lo,U,in,out,dag);
 }
 template <class Impl>
 void NaiveStaggeredFermion<Impl>::DhopInternalOverlappedComms(StencilImpl &st, LebesgueOrder &lo,
@@ -339,36 +339,36 @@ void NaiveStaggeredFermion<Impl>::DhopInternalOverlappedComms(StencilImpl &st, L
 							      const FermionField &in,
 							      FermionField &out, int dag) 
 {
-  Compressor compressor; 
-  int len =  U.Grid()->oSites();
-
-  st.Prepare();
-  st.HaloGather(in,compressor);
-
-  std::vector<std::vector<CommsRequest_t> > requests;
-  st.CommunicateBegin(requests);
-
-  st.CommsMergeSHM(compressor);
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Removed explicit thread comms
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  {
-    int interior=1;
-    int exterior=0;
-    Kernels::DhopNaive(st,lo,U,in,out,dag,interior,exterior);
-  }
-
-  st.CommunicateComplete(requests);
-
-  // First to enter, last to leave timing
-  st.CommsMerge(compressor);
-
-  {
-    int interior=0;
-    int exterior=1;
-    Kernels::DhopNaive(st,lo,U,in,out,dag,interior,exterior);
-  }
+//  Compressor compressor; 
+//  int len =  U.Grid()->oSites();
+//
+//  st.Prepare();
+//  st.HaloGather(in,compressor);
+//
+//  std::vector<std::vector<CommsRequest_t> > requests;
+//  st.CommunicateBegin(requests);
+//
+//  st.CommsMergeSHM(compressor);
+//
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////
+//  // Removed explicit thread comms
+//  //////////////////////////////////////////////////////////////////////////////////////////////////////
+//  {
+//    int interior=1;
+//    int exterior=0;
+//    Kernels::DhopNaive(st,lo,U,in,out,dag,interior,exterior);
+//  }
+//
+//  st.CommunicateComplete(requests);
+//
+//  // First to enter, last to leave timing
+//  st.CommsMerge(compressor);
+//
+//  {
+//    int interior=0;
+//    int exterior=1;
+//    Kernels::DhopNaive(st,lo,U,in,out,dag,interior,exterior);
+//  }
 }
 
 template <class Impl>
@@ -377,16 +377,16 @@ void NaiveStaggeredFermion<Impl>::DhopInternalSerialComms(StencilImpl &st, Lebes
 							  const FermionField &in,
 							  FermionField &out, int dag) 
 {
-  assert((dag == DaggerNo) || (dag == DaggerYes));
-
-  Compressor compressor;
-  st.HaloExchange(in, compressor);
-
-  {
-    int interior=1;
-    int exterior=1;
-    Kernels::DhopNaive(st,lo,U,in,out,dag,interior,exterior);
-  }
+//  assert((dag == DaggerNo) || (dag == DaggerYes));
+//
+//  Compressor compressor;
+//  st.HaloExchange(in, compressor);
+//
+//  {
+//    int interior=1;
+//    int exterior=1;
+//    Kernels::DhopNaive(st,lo,U,in,out,dag,interior,exterior);
+//  }
 };
 
 //////////////////////////////////////////////////////// 

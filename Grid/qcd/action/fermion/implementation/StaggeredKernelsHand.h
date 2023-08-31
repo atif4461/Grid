@@ -192,57 +192,57 @@ void StaggeredKernels<Impl>::DhopSiteHand(StencilView &st,
 					  SiteSpinor *buf, int sF, int sU, 
 					  const FermionFieldView &in, FermionFieldView &out,int dag) 
 {
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  typedef decltype( coalescedRead( in[0]()()(0) )) Simt;
-  HAND_DECLARATIONS(Simt);
-
-  typedef decltype( coalescedRead( in[0] )) calcSiteSpinor;
-  calcSiteSpinor result;
-  int offset,local,perm, ptype;
-
-  StencilEntry *SE;
-  int skew;
-
-  //  for(int s=0;s<LLs;s++){
-  //    int sF=s+LLs*sU;
-  {
-
-    skew = 0;
-    HAND_STENCIL_LEG_BEGIN(Xp,3,skew,even);  
-    HAND_STENCIL_LEG_BEGIN(Yp,2,skew,odd);   
-    HAND_STENCIL_LEG      (U,Zp,1,skew,even);  
-    HAND_STENCIL_LEG      (U,Tp,0,skew,odd);  
-    HAND_STENCIL_LEG      (U,Xm,3,skew,even);  
-    HAND_STENCIL_LEG      (U,Ym,2,skew,odd);   
-    HAND_STENCIL_LEG      (U,Zm,1,skew,even);  
-    HAND_STENCIL_LEG      (U,Tm,0,skew,odd);  
-    if (Naik) {
-    skew = 8;
-    HAND_STENCIL_LEG(UUU,Xp,3,skew,even);  
-    HAND_STENCIL_LEG(UUU,Yp,2,skew,odd);   
-    HAND_STENCIL_LEG(UUU,Zp,1,skew,even);  
-    HAND_STENCIL_LEG(UUU,Tp,0,skew,odd);  
-    HAND_STENCIL_LEG(UUU,Xm,3,skew,even);  
-    HAND_STENCIL_LEG(UUU,Ym,2,skew,odd);   
-    HAND_STENCIL_LEG(UUU,Zm,1,skew,even);  
-    HAND_STENCIL_LEG(UUU,Tm,0,skew,odd);  
-    }    
-    if ( dag ) {
-      result()()(0) = - even_0 - odd_0;
-      result()()(1) = - even_1 - odd_1;
-      result()()(2) = - even_2 - odd_2;
-    } else { 
-      result()()(0) = even_0 + odd_0;
-      result()()(1) = even_1 + odd_1;
-      result()()(2) = even_2 + odd_2;
-    }
-    coalescedWrite(out[sF],result);
-  }
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  typedef decltype( coalescedRead( in[0]()()(0) )) Simt;
+//  HAND_DECLARATIONS(Simt);
+//
+//  typedef decltype( coalescedRead( in[0] )) calcSiteSpinor;
+//  calcSiteSpinor result;
+//  int offset,local,perm, ptype;
+//
+//  StencilEntry *SE;
+//  int skew;
+//
+//  //  for(int s=0;s<LLs;s++){
+//  //    int sF=s+LLs*sU;
+//  {
+//
+//    skew = 0;
+//    HAND_STENCIL_LEG_BEGIN(Xp,3,skew,even);  
+//    HAND_STENCIL_LEG_BEGIN(Yp,2,skew,odd);   
+//    HAND_STENCIL_LEG      (U,Zp,1,skew,even);  
+//    HAND_STENCIL_LEG      (U,Tp,0,skew,odd);  
+//    HAND_STENCIL_LEG      (U,Xm,3,skew,even);  
+//    HAND_STENCIL_LEG      (U,Ym,2,skew,odd);   
+//    HAND_STENCIL_LEG      (U,Zm,1,skew,even);  
+//    HAND_STENCIL_LEG      (U,Tm,0,skew,odd);  
+//    if (Naik) {
+//    skew = 8;
+//    HAND_STENCIL_LEG(UUU,Xp,3,skew,even);  
+//    HAND_STENCIL_LEG(UUU,Yp,2,skew,odd);   
+//    HAND_STENCIL_LEG(UUU,Zp,1,skew,even);  
+//    HAND_STENCIL_LEG(UUU,Tp,0,skew,odd);  
+//    HAND_STENCIL_LEG(UUU,Xm,3,skew,even);  
+//    HAND_STENCIL_LEG(UUU,Ym,2,skew,odd);   
+//    HAND_STENCIL_LEG(UUU,Zm,1,skew,even);  
+//    HAND_STENCIL_LEG(UUU,Tm,0,skew,odd);  
+//    }    
+//    if ( dag ) {
+//      result()()(0) = - even_0 - odd_0;
+//      result()()(1) = - even_1 - odd_1;
+//      result()()(2) = - even_2 - odd_2;
+//    } else { 
+//      result()()(0) = even_0 + odd_0;
+//      result()()(1) = even_1 + odd_1;
+//      result()()(2) = even_2 + odd_2;
+//    }
+//    coalescedWrite(out[sF],result);
+//  }
 }
 
 
@@ -253,60 +253,60 @@ void StaggeredKernels<Impl>::DhopSiteHandInt(StencilView &st,
 					     SiteSpinor *buf, int sF, int sU, 
 					     const FermionFieldView &in, FermionFieldView &out,int dag) 
 {
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  typedef decltype( coalescedRead( in[0]()()(0) )) Simt;
-  HAND_DECLARATIONS(Simt);
-
-  typedef decltype( coalescedRead( in[0] )) calcSiteSpinor;
-  calcSiteSpinor result;
-  int offset, ptype, local, perm;
-
-  StencilEntry *SE;
-  int skew;
-
-  //  for(int s=0;s<LLs;s++){
-  //    int sF=s+LLs*sU;
-  {
-
-    zeroit(even_0);    zeroit(even_1);    zeroit(even_2);
-    zeroit(odd_0);    zeroit(odd_1);    zeroit(odd_2);
-
-    skew = 0;
-    HAND_STENCIL_LEG_INT(U,Xp,3,skew,even);  
-    HAND_STENCIL_LEG_INT(U,Yp,2,skew,odd);   
-    HAND_STENCIL_LEG_INT(U,Zp,1,skew,even);  
-    HAND_STENCIL_LEG_INT(U,Tp,0,skew,odd);  
-    HAND_STENCIL_LEG_INT(U,Xm,3,skew,even);  
-    HAND_STENCIL_LEG_INT(U,Ym,2,skew,odd);   
-    HAND_STENCIL_LEG_INT(U,Zm,1,skew,even);  
-    HAND_STENCIL_LEG_INT(U,Tm,0,skew,odd);  
-    if (Naik) {
-    skew = 8;
-    HAND_STENCIL_LEG_INT(UUU,Xp,3,skew,even);  
-    HAND_STENCIL_LEG_INT(UUU,Yp,2,skew,odd);   
-    HAND_STENCIL_LEG_INT(UUU,Zp,1,skew,even);  
-    HAND_STENCIL_LEG_INT(UUU,Tp,0,skew,odd);  
-    HAND_STENCIL_LEG_INT(UUU,Xm,3,skew,even);  
-    HAND_STENCIL_LEG_INT(UUU,Ym,2,skew,odd);   
-    HAND_STENCIL_LEG_INT(UUU,Zm,1,skew,even);  
-    HAND_STENCIL_LEG_INT(UUU,Tm,0,skew,odd);  
-    }
-    // Assume every site must be connected to at least one interior point. No 1^4 subvols.
-    if ( dag ) {
-      result()()(0) = - even_0 - odd_0;
-      result()()(1) = - even_1 - odd_1;
-      result()()(2) = - even_2 - odd_2;
-    } else { 
-      result()()(0) = even_0 + odd_0;
-      result()()(1) = even_1 + odd_1;
-      result()()(2) = even_2 + odd_2;
-    }
-    coalescedWrite(out[sF],result);
-  }
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  typedef decltype( coalescedRead( in[0]()()(0) )) Simt;
+//  HAND_DECLARATIONS(Simt);
+//
+//  typedef decltype( coalescedRead( in[0] )) calcSiteSpinor;
+//  calcSiteSpinor result;
+//  int offset, ptype, local, perm;
+//
+//  StencilEntry *SE;
+//  int skew;
+//
+//  //  for(int s=0;s<LLs;s++){
+//  //    int sF=s+LLs*sU;
+//  {
+//
+//    zeroit(even_0);    zeroit(even_1);    zeroit(even_2);
+//    zeroit(odd_0);    zeroit(odd_1);    zeroit(odd_2);
+//
+//    skew = 0;
+//    HAND_STENCIL_LEG_INT(U,Xp,3,skew,even);  
+//    HAND_STENCIL_LEG_INT(U,Yp,2,skew,odd);   
+//    HAND_STENCIL_LEG_INT(U,Zp,1,skew,even);  
+//    HAND_STENCIL_LEG_INT(U,Tp,0,skew,odd);  
+//    HAND_STENCIL_LEG_INT(U,Xm,3,skew,even);  
+//    HAND_STENCIL_LEG_INT(U,Ym,2,skew,odd);   
+//    HAND_STENCIL_LEG_INT(U,Zm,1,skew,even);  
+//    HAND_STENCIL_LEG_INT(U,Tm,0,skew,odd);  
+//    if (Naik) {
+//    skew = 8;
+//    HAND_STENCIL_LEG_INT(UUU,Xp,3,skew,even);  
+//    HAND_STENCIL_LEG_INT(UUU,Yp,2,skew,odd);   
+//    HAND_STENCIL_LEG_INT(UUU,Zp,1,skew,even);  
+//    HAND_STENCIL_LEG_INT(UUU,Tp,0,skew,odd);  
+//    HAND_STENCIL_LEG_INT(UUU,Xm,3,skew,even);  
+//    HAND_STENCIL_LEG_INT(UUU,Ym,2,skew,odd);   
+//    HAND_STENCIL_LEG_INT(UUU,Zm,1,skew,even);  
+//    HAND_STENCIL_LEG_INT(UUU,Tm,0,skew,odd);  
+//    }
+//    // Assume every site must be connected to at least one interior point. No 1^4 subvols.
+//    if ( dag ) {
+//      result()()(0) = - even_0 - odd_0;
+//      result()()(1) = - even_1 - odd_1;
+//      result()()(2) = - even_2 - odd_2;
+//    } else { 
+//      result()()(0) = even_0 + odd_0;
+//      result()()(1) = even_1 + odd_1;
+//      result()()(2) = even_2 + odd_2;
+//    }
+//    coalescedWrite(out[sF],result);
+//  }
 }
 
 
@@ -317,62 +317,62 @@ void StaggeredKernels<Impl>::DhopSiteHandExt(StencilView &st,
 					     SiteSpinor *buf, int sF, int sU, 
 					     const FermionFieldView &in, FermionFieldView &out,int dag) 
 {
-  typedef typename Simd::scalar_type S;
-  typedef typename Simd::vector_type V;
-
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  typedef decltype( coalescedRead( in[0]()()(0) )) Simt;
-  HAND_DECLARATIONS(Simt);
-
-  typedef decltype( coalescedRead( in[0] )) calcSiteSpinor;
-  calcSiteSpinor result;
-  int offset, ptype, local;
-
-  StencilEntry *SE;
-  int skew;
-
-  //  for(int s=0;s<LLs;s++){
-  //    int sF=s+LLs*sU;
-  {
-
-    zeroit(even_0);    zeroit(even_1);    zeroit(even_2);
-    zeroit(odd_0);    zeroit(odd_1);    zeroit(odd_2);
-    int nmu=0;
-    skew = 0;
-    HAND_STENCIL_LEG_EXT(U,Xp,3,skew,even);  
-    HAND_STENCIL_LEG_EXT(U,Yp,2,skew,odd);   
-    HAND_STENCIL_LEG_EXT(U,Zp,1,skew,even);  
-    HAND_STENCIL_LEG_EXT(U,Tp,0,skew,odd);  
-    HAND_STENCIL_LEG_EXT(U,Xm,3,skew,even);  
-    HAND_STENCIL_LEG_EXT(U,Ym,2,skew,odd);   
-    HAND_STENCIL_LEG_EXT(U,Zm,1,skew,even);  
-    HAND_STENCIL_LEG_EXT(U,Tm,0,skew,odd);  
-    if (Naik) {
-    skew = 8;
-    HAND_STENCIL_LEG_EXT(UUU,Xp,3,skew,even);  
-    HAND_STENCIL_LEG_EXT(UUU,Yp,2,skew,odd);   
-    HAND_STENCIL_LEG_EXT(UUU,Zp,1,skew,even);  
-    HAND_STENCIL_LEG_EXT(UUU,Tp,0,skew,odd);  
-    HAND_STENCIL_LEG_EXT(UUU,Xm,3,skew,even);  
-    HAND_STENCIL_LEG_EXT(UUU,Ym,2,skew,odd);   
-    HAND_STENCIL_LEG_EXT(UUU,Zm,1,skew,even);  
-    HAND_STENCIL_LEG_EXT(UUU,Tm,0,skew,odd);  
-    }
-    // Add sum of all exterior connected stencil legs
-    if ( nmu ) { 
-      if ( dag ) {
-	result()()(0) = - even_0 - odd_0;
-	result()()(1) = - even_1 - odd_1;
-	result()()(2) = - even_2 - odd_2;
-      } else { 
-	result()()(0) = even_0 + odd_0;
-	result()()(1) = even_1 + odd_1;
-	result()()(2) = even_2 + odd_2;
-      }
-      coalescedWrite(out[sF] , out(sF)+ result);
-    }
-  }
+//  typedef typename Simd::scalar_type S;
+//  typedef typename Simd::vector_type V;
+//
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  typedef decltype( coalescedRead( in[0]()()(0) )) Simt;
+//  HAND_DECLARATIONS(Simt);
+//
+//  typedef decltype( coalescedRead( in[0] )) calcSiteSpinor;
+//  calcSiteSpinor result;
+//  int offset, ptype, local;
+//
+//  StencilEntry *SE;
+//  int skew;
+//
+//  //  for(int s=0;s<LLs;s++){
+//  //    int sF=s+LLs*sU;
+//  {
+//
+//    zeroit(even_0);    zeroit(even_1);    zeroit(even_2);
+//    zeroit(odd_0);    zeroit(odd_1);    zeroit(odd_2);
+//    int nmu=0;
+//    skew = 0;
+//    HAND_STENCIL_LEG_EXT(U,Xp,3,skew,even);  
+//    HAND_STENCIL_LEG_EXT(U,Yp,2,skew,odd);   
+//    HAND_STENCIL_LEG_EXT(U,Zp,1,skew,even);  
+//    HAND_STENCIL_LEG_EXT(U,Tp,0,skew,odd);  
+//    HAND_STENCIL_LEG_EXT(U,Xm,3,skew,even);  
+//    HAND_STENCIL_LEG_EXT(U,Ym,2,skew,odd);   
+//    HAND_STENCIL_LEG_EXT(U,Zm,1,skew,even);  
+//    HAND_STENCIL_LEG_EXT(U,Tm,0,skew,odd);  
+//    if (Naik) {
+//    skew = 8;
+//    HAND_STENCIL_LEG_EXT(UUU,Xp,3,skew,even);  
+//    HAND_STENCIL_LEG_EXT(UUU,Yp,2,skew,odd);   
+//    HAND_STENCIL_LEG_EXT(UUU,Zp,1,skew,even);  
+//    HAND_STENCIL_LEG_EXT(UUU,Tp,0,skew,odd);  
+//    HAND_STENCIL_LEG_EXT(UUU,Xm,3,skew,even);  
+//    HAND_STENCIL_LEG_EXT(UUU,Ym,2,skew,odd);   
+//    HAND_STENCIL_LEG_EXT(UUU,Zm,1,skew,even);  
+//    HAND_STENCIL_LEG_EXT(UUU,Tm,0,skew,odd);  
+//    }
+//    // Add sum of all exterior connected stencil legs
+//    if ( nmu ) { 
+//      if ( dag ) {
+//	result()()(0) = - even_0 - odd_0;
+//	result()()(1) = - even_1 - odd_1;
+//	result()()(2) = - even_2 - odd_2;
+//      } else { 
+//	result()()(0) = even_0 + odd_0;
+//	result()()(1) = even_1 + odd_1;
+//	result()()(2) = even_2 + odd_2;
+//      }
+//      coalescedWrite(out[sF] , out(sF)+ result);
+//    }
+//  }
 }
 
 /*

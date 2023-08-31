@@ -77,44 +77,44 @@ void StaggeredKernels<Impl>::DhopSiteGeneric(StencilView &st,
 					     SiteSpinor *buf, int sF, int sU, 
 					     const FermionFieldView &in, FermionFieldView &out, int dag) 
 {
-  typedef decltype(coalescedRead(in[0])) calcSpinor;
-  calcSpinor chi;
-  calcSpinor Uchi;
-  StencilEntry *SE;
-  int ptype;
-  int skew;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  //  for(int s=0;s<LLs;s++){
-  //
-  //    int sF=LLs*sU+s;
-  {
-    skew = 0;
-    GENERIC_STENCIL_LEG(U,Xp,skew,Impl::multLink);
-    GENERIC_STENCIL_LEG(U,Yp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(U,Zp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(U,Tp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(U,Xm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(U,Ym,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(U,Zm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(U,Tm,skew,Impl::multLinkAdd);
-    if ( Naik ) {
-    skew=8;
-    GENERIC_STENCIL_LEG(UUU,Xp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Yp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Zp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Tp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Xm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Ym,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Zm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG(UUU,Tm,skew,Impl::multLinkAdd);
-    }
-    if ( dag ) { 
-      Uchi = - Uchi;
-    } 
-    coalescedWrite(out[sF], Uchi,lane);
-  }
+//  typedef decltype(coalescedRead(in[0])) calcSpinor;
+//  calcSpinor chi;
+//  calcSpinor Uchi;
+//  StencilEntry *SE;
+//  int ptype;
+//  int skew;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  //  for(int s=0;s<LLs;s++){
+//  //
+//  //    int sF=LLs*sU+s;
+//  {
+//    skew = 0;
+//    GENERIC_STENCIL_LEG(U,Xp,skew,Impl::multLink);
+//    GENERIC_STENCIL_LEG(U,Yp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(U,Zp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(U,Tp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(U,Xm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(U,Ym,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(U,Zm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(U,Tm,skew,Impl::multLinkAdd);
+//    if ( Naik ) {
+//    skew=8;
+//    GENERIC_STENCIL_LEG(UUU,Xp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Yp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Zp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Tp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Xm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Ym,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Zm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG(UUU,Tm,skew,Impl::multLinkAdd);
+//    }
+//    if ( dag ) { 
+//      Uchi = - Uchi;
+//    } 
+//    coalescedWrite(out[sF], Uchi,lane);
+//  }
 };
 
   ///////////////////////////////////////////////////
@@ -127,44 +127,44 @@ void StaggeredKernels<Impl>::DhopSiteGenericInt(StencilView &st,
 						SiteSpinor *buf, int sF, int sU, 
 						const FermionFieldView &in, FermionFieldView &out,int dag)
 {
-  typedef decltype(coalescedRead(in[0])) calcSpinor;
-  calcSpinor chi;
-  calcSpinor Uchi;
-  StencilEntry *SE;
-  int ptype;
-  int skew ;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  //  for(int s=0;s<LLs;s++){
-  //    int sF=LLs*sU+s;
-  {
-    skew = 0;
-    Uchi=Zero();
-    GENERIC_STENCIL_LEG_INT(U,Xp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Yp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Zp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Tp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Xm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Ym,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Zm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(U,Tm,skew,Impl::multLinkAdd);
-    if ( Naik ) {
-    skew=8;
-    GENERIC_STENCIL_LEG_INT(UUU,Xp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Yp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Zp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Tp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Xm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Ym,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Zm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_INT(UUU,Tm,skew,Impl::multLinkAdd);
-    }
-    if ( dag ) {
-      Uchi = - Uchi;
-    }
-    coalescedWrite(out[sF], Uchi,lane);
-  }
+//  typedef decltype(coalescedRead(in[0])) calcSpinor;
+//  calcSpinor chi;
+//  calcSpinor Uchi;
+//  StencilEntry *SE;
+//  int ptype;
+//  int skew ;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  //  for(int s=0;s<LLs;s++){
+//  //    int sF=LLs*sU+s;
+//  {
+//    skew = 0;
+//    Uchi=Zero();
+//    GENERIC_STENCIL_LEG_INT(U,Xp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Yp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Zp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Tp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Xm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Ym,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Zm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(U,Tm,skew,Impl::multLinkAdd);
+//    if ( Naik ) {
+//    skew=8;
+//    GENERIC_STENCIL_LEG_INT(UUU,Xp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Yp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Zp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Tp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Xm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Ym,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Zm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_INT(UUU,Tm,skew,Impl::multLinkAdd);
+//    }
+//    if ( dag ) {
+//      Uchi = - Uchi;
+//    }
+//    coalescedWrite(out[sF], Uchi,lane);
+//  }
 };
 
 
@@ -178,49 +178,49 @@ void StaggeredKernels<Impl>::DhopSiteGenericExt(StencilView &st,
 						SiteSpinor *buf, int sF, int sU,
 						const FermionFieldView &in, FermionFieldView &out,int dag)
 {
-  typedef decltype(coalescedRead(in[0])) calcSpinor;
-  calcSpinor chi;
-  calcSpinor Uchi;
-  StencilEntry *SE;
-  int ptype;
-  int nmu=0;
-  int skew ;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-
-  //  for(int s=0;s<LLs;s++){
-  //    int sF=LLs*sU+s;
-  {
-    skew = 0;
-    Uchi=Zero();
-    GENERIC_STENCIL_LEG_EXT(U,Xp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Yp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Zp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Tp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Xm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Ym,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Zm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(U,Tm,skew,Impl::multLinkAdd);
-    if ( Naik ) {
-    skew=8;
-    GENERIC_STENCIL_LEG_EXT(UUU,Xp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Yp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Zp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Tp,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Xm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Ym,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Zm,skew,Impl::multLinkAdd);
-    GENERIC_STENCIL_LEG_EXT(UUU,Tm,skew,Impl::multLinkAdd);
-    }
-    if ( nmu ) {
-      auto _out = coalescedRead(out[sF],lane);
-      if ( dag ) {
-	coalescedWrite(out[sF], _out-Uchi,lane);
-      } else { 
-	coalescedWrite(out[sF], _out+Uchi,lane);
-      }
-    }
-  }
+//  typedef decltype(coalescedRead(in[0])) calcSpinor;
+//  calcSpinor chi;
+//  calcSpinor Uchi;
+//  StencilEntry *SE;
+//  int ptype;
+//  int nmu=0;
+//  int skew ;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//
+//  //  for(int s=0;s<LLs;s++){
+//  //    int sF=LLs*sU+s;
+//  {
+//    skew = 0;
+//    Uchi=Zero();
+//    GENERIC_STENCIL_LEG_EXT(U,Xp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Yp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Zp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Tp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Xm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Ym,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Zm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(U,Tm,skew,Impl::multLinkAdd);
+//    if ( Naik ) {
+//    skew=8;
+//    GENERIC_STENCIL_LEG_EXT(UUU,Xp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Yp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Zp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Tp,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Xm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Ym,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Zm,skew,Impl::multLinkAdd);
+//    GENERIC_STENCIL_LEG_EXT(UUU,Tm,skew,Impl::multLinkAdd);
+//    }
+//    if ( nmu ) {
+//      auto _out = coalescedRead(out[sF],lane);
+//      if ( dag ) {
+//	coalescedWrite(out[sF], _out-Uchi,lane);
+//      } else { 
+//	coalescedWrite(out[sF], _out+Uchi,lane);
+//      }
+//    }
+//  }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -260,82 +260,82 @@ void StaggeredKernels<Impl>::DhopImproved(StencilImpl &st, LebesgueOrder &lo,
 					  DoubledGaugeField &U, DoubledGaugeField &UUU, 
 					  const FermionField &in, FermionField &out, int dag, int interior,int exterior)
 {
-  GridBase *FGrid=in.Grid();  
-  GridBase *UGrid=U.Grid();  
-  typedef StaggeredKernels<Impl> ThisKernel;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  autoView( UUU_v , UUU, AcceleratorRead);
-  autoView( U_v   ,   U, AcceleratorRead);
-  autoView( in_v  ,  in, AcceleratorRead);
-  autoView( out_v , out, AcceleratorWrite);
-  autoView( st_v  ,  st, AcceleratorRead);
-  SiteSpinor * buf = st.CommBuf();
-    
-  int Ls=1;
-  if(FGrid->Nd()==UGrid->Nd()+1){
-    Ls    = FGrid->_rdimensions[0];
-  }
-  int Nsite = UGrid->oSites();
-
-  if( interior && exterior ) { 
-    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGeneric,1); return;}
-#ifndef GRID_CUDA
-    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHand,1);    return;}
-    if (Opt == OptInlineAsm  ) {  ASM_CALL(DhopSiteAsm);     return;}
-#endif
-  } else if( interior ) {
-    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericInt,1); return;}
-#ifndef GRID_CUDA
-    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandInt,1);    return;}
-#endif
-  } else if( exterior ) { 
-    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericExt,1); return;}
-#ifndef GRID_CUDA
-    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandExt,1);    return;}
-#endif
-  }
-  assert(0 && " Kernel optimisation case not covered ");
+//  GridBase *FGrid=in.Grid();  
+//  GridBase *UGrid=U.Grid();  
+//  typedef StaggeredKernels<Impl> ThisKernel;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  autoView( UUU_v , UUU, AcceleratorRead);
+//  autoView( U_v   ,   U, AcceleratorRead);
+//  autoView( in_v  ,  in, AcceleratorRead);
+//  autoView( out_v , out, AcceleratorWrite);
+//  autoView( st_v  ,  st, AcceleratorRead);
+//  SiteSpinor * buf = st.CommBuf();
+//    
+//  int Ls=1;
+//  if(FGrid->Nd()==UGrid->Nd()+1){
+//    Ls    = FGrid->_rdimensions[0];
+//  }
+//  int Nsite = UGrid->oSites();
+//
+//  if( interior && exterior ) { 
+//    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGeneric,1); return;}
+//#ifndef GRID_CUDA
+//    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHand,1);    return;}
+//    if (Opt == OptInlineAsm  ) {  ASM_CALL(DhopSiteAsm);     return;}
+//#endif
+//  } else if( interior ) {
+//    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericInt,1); return;}
+//#ifndef GRID_CUDA
+//    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandInt,1);    return;}
+//#endif
+//  } else if( exterior ) { 
+//    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericExt,1); return;}
+//#ifndef GRID_CUDA
+//    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandExt,1);    return;}
+//#endif
+//  }
+//  assert(0 && " Kernel optimisation case not covered ");
 }
 template <class Impl> 
 void StaggeredKernels<Impl>::DhopNaive(StencilImpl &st, LebesgueOrder &lo, 
 				       DoubledGaugeField &U,
 				       const FermionField &in, FermionField &out, int dag, int interior,int exterior)
 {
-  GridBase *FGrid=in.Grid();  
-  GridBase *UGrid=U.Grid();  
-  typedef StaggeredKernels<Impl> ThisKernel;
-  const int Nsimd = SiteHalfSpinor::Nsimd();
-  const int lane=acceleratorSIMTlane(Nsimd);
-  autoView( UUU_v ,   U, AcceleratorRead);
-  autoView( U_v   ,   U, AcceleratorRead);
-  autoView( in_v  ,  in, AcceleratorRead);
-  autoView( out_v , out, AcceleratorWrite);
-  autoView( st_v  ,  st, AcceleratorRead);
-  SiteSpinor * buf = st.CommBuf();
-
-  int Ls=1;
-  if(FGrid->Nd()==UGrid->Nd()+1){
-    Ls    = FGrid->_rdimensions[0];
-  }
-  int Nsite = UGrid->oSites();
-  
-  if( interior && exterior ) { 
-    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGeneric,0); return;}
-#ifndef GRID_CUDA
-    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHand,0);    return;}
-#endif
-  } else if( interior ) {
-    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericInt,0); return;}
-#ifndef GRID_CUDA
-    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandInt,0);    return;}
-#endif
-  } else if( exterior ) { 
-    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericExt,0); return;}
-#ifndef GRID_CUDA
-    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandExt,0);    return;}
-#endif
-  }
+//  GridBase *FGrid=in.Grid();  
+//  GridBase *UGrid=U.Grid();  
+//  typedef StaggeredKernels<Impl> ThisKernel;
+//  const int Nsimd = SiteHalfSpinor::Nsimd();
+//  const int lane=acceleratorSIMTlane(Nsimd);
+//  autoView( UUU_v ,   U, AcceleratorRead);
+//  autoView( U_v   ,   U, AcceleratorRead);
+//  autoView( in_v  ,  in, AcceleratorRead);
+//  autoView( out_v , out, AcceleratorWrite);
+//  autoView( st_v  ,  st, AcceleratorRead);
+//  SiteSpinor * buf = st.CommBuf();
+//
+//  int Ls=1;
+//  if(FGrid->Nd()==UGrid->Nd()+1){
+//    Ls    = FGrid->_rdimensions[0];
+//  }
+//  int Nsite = UGrid->oSites();
+//  
+//  if( interior && exterior ) { 
+//    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGeneric,0); return;}
+//#ifndef GRID_CUDA
+//    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHand,0);    return;}
+//#endif
+//  } else if( interior ) {
+//    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericInt,0); return;}
+//#ifndef GRID_CUDA
+//    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandInt,0);    return;}
+//#endif
+//  } else if( exterior ) { 
+//    if (Opt == OptGeneric    ) { KERNEL_CALL(DhopSiteGenericExt,0); return;}
+//#ifndef GRID_CUDA
+//    if (Opt == OptHandUnroll ) { KERNEL_CALL(DhopSiteHandExt,0);    return;}
+//#endif
+//  }
 }
 
 

@@ -43,31 +43,31 @@ template<class Impl>
 void DomainWallEOFAFermion<Impl>::M5D(const FermionField& psi_i, const FermionField& phi_i,FermionField& chi_i, 
 				      Vector<Coeff_t>& lower, Vector<Coeff_t>& diag, Vector<Coeff_t>& upper)
 {
-  chi_i.Checkerboard() = psi_i.Checkerboard();
-  int Ls = this->Ls;
-  GridBase* grid = psi_i.Grid();
-  autoView( phi , phi_i, AcceleratorRead);
-  autoView( psi , psi_i, AcceleratorRead);
-  autoView( chi , chi_i, AcceleratorWrite);
-  assert(phi.Checkerboard() == psi.Checkerboard());
-  auto pdiag = &diag[0];
-  auto pupper = &upper[0];
-  auto plower = &lower[0];
-  // Flops = 6.0*(Nc*Ns) *Ls*vol
-  
-  auto nloop=grid->oSites()/Ls;
-  accelerator_for(sss,nloop,Simd::Nsimd(),{
-    auto ss=sss*Ls;
-    typedef decltype(coalescedRead(psi[0])) spinor;
-    for(int s=0; s<Ls; s++){
-      spinor tmp1, tmp2;
-      uint64_t idx_u = ss+((s+1)%Ls);
-      uint64_t idx_l = ss+((s+Ls-1)%Ls);
-      spProj5m(tmp1, psi(idx_u));
-      spProj5p(tmp2, psi(idx_l));
-      coalescedWrite(chi[ss+s], pdiag[s]*phi(ss+s) + pupper[s]*tmp1 + plower[s]*tmp2);
-    }
-  });
+//  chi_i.Checkerboard() = psi_i.Checkerboard();
+//  int Ls = this->Ls;
+//  GridBase* grid = psi_i.Grid();
+//  autoView( phi , phi_i, AcceleratorRead);
+//  autoView( psi , psi_i, AcceleratorRead);
+//  autoView( chi , chi_i, AcceleratorWrite);
+//  assert(phi.Checkerboard() == psi.Checkerboard());
+//  auto pdiag = &diag[0];
+//  auto pupper = &upper[0];
+//  auto plower = &lower[0];
+//  // Flops = 6.0*(Nc*Ns) *Ls*vol
+//  
+//  auto nloop=grid->oSites()/Ls;
+//  accelerator_for(sss,nloop,Simd::Nsimd(),{
+//    auto ss=sss*Ls;
+//    typedef decltype(coalescedRead(psi[0])) spinor;
+//    for(int s=0; s<Ls; s++){
+//      spinor tmp1, tmp2;
+//      uint64_t idx_u = ss+((s+1)%Ls);
+//      uint64_t idx_l = ss+((s+Ls-1)%Ls);
+//      spProj5m(tmp1, psi(idx_u));
+//      spProj5p(tmp2, psi(idx_l));
+//      coalescedWrite(chi[ss+s], pdiag[s]*phi(ss+s) + pupper[s]*tmp1 + plower[s]*tmp2);
+//    }
+//  });
 
 }
 
@@ -75,142 +75,142 @@ template<class Impl>
 void DomainWallEOFAFermion<Impl>::M5Ddag(const FermionField& psi_i, const FermionField& phi_i, FermionField& chi_i, 
 					 Vector<Coeff_t>& lower, Vector<Coeff_t>& diag, Vector<Coeff_t>& upper)
 {
-  chi_i.Checkerboard() = psi_i.Checkerboard();
-  GridBase* grid = psi_i.Grid();
-  int Ls = this->Ls;
-
-  autoView( psi , psi_i, AcceleratorRead);
-  autoView( phi , phi_i, AcceleratorRead);
-  autoView( chi , chi_i, AcceleratorWrite);
-  assert(phi.Checkerboard() == psi.Checkerboard());
-  auto pdiag = &diag[0];
-  auto pupper = &upper[0];
-  auto plower = &lower[0];
-
-  // Flops = 6.0*(Nc*Ns) *Ls*vol
-
-  auto nloop=grid->oSites()/Ls;
-  accelerator_for(sss,nloop,Simd::Nsimd(),{
-    typedef decltype(coalescedRead(psi[0])) spinor;
-    auto ss=sss*Ls;
-    for(int s=0; s<Ls; s++){
-      spinor tmp1, tmp2;
-      uint64_t idx_u = ss+((s+1)%Ls);
-      uint64_t idx_l = ss+((s+Ls-1)%Ls);
-      spProj5p(tmp1, psi(idx_u));
-      spProj5m(tmp2, psi(idx_l));
-      coalescedWrite(chi[ss+s], pdiag[s]*phi(ss+s) + pupper[s]*tmp1 + plower[s]*tmp2);
-    }
-  });
-
+//  chi_i.Checkerboard() = psi_i.Checkerboard();
+//  GridBase* grid = psi_i.Grid();
+//  int Ls = this->Ls;
+//
+//  autoView( psi , psi_i, AcceleratorRead);
+//  autoView( phi , phi_i, AcceleratorRead);
+//  autoView( chi , chi_i, AcceleratorWrite);
+//  assert(phi.Checkerboard() == psi.Checkerboard());
+//  auto pdiag = &diag[0];
+//  auto pupper = &upper[0];
+//  auto plower = &lower[0];
+//
+//  // Flops = 6.0*(Nc*Ns) *Ls*vol
+//
+//  auto nloop=grid->oSites()/Ls;
+//  accelerator_for(sss,nloop,Simd::Nsimd(),{
+//    typedef decltype(coalescedRead(psi[0])) spinor;
+//    auto ss=sss*Ls;
+//    for(int s=0; s<Ls; s++){
+//      spinor tmp1, tmp2;
+//      uint64_t idx_u = ss+((s+1)%Ls);
+//      uint64_t idx_l = ss+((s+Ls-1)%Ls);
+//      spProj5p(tmp1, psi(idx_u));
+//      spProj5m(tmp2, psi(idx_l));
+//      coalescedWrite(chi[ss+s], pdiag[s]*phi(ss+s) + pupper[s]*tmp1 + plower[s]*tmp2);
+//    }
+//  });
+//
 }
 
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::MooeeInv(const FermionField& psi_i, FermionField& chi_i)
 {
-  chi_i.Checkerboard() = psi_i.Checkerboard();
-  GridBase* grid = psi_i.Grid();
-  autoView( psi, psi_i, AcceleratorRead);
-  autoView( chi, chi_i, AcceleratorWrite);
-  int Ls = this->Ls;
-
-  auto plee  = & this->lee[0];
-  auto pdee  = & this->dee[0];
-  auto puee  = & this->uee[0];
-
-  auto pleem = & this->leem[0];
-  auto pueem = & this->ueem[0];
-
-  uint64_t nloop=grid->oSites()/Ls;
-  accelerator_for(sss,nloop,Simd::Nsimd(),{
-    uint64_t ss=sss*Ls;
-    typedef decltype(coalescedRead(psi[0])) spinor;
-    spinor tmp, acc, res;
-
-    // Apply (L^{\prime})^{-1} L_m^{-1}
-    res = psi(ss);
-    spProj5m(tmp,res);
-    acc = pleem[0]*tmp;
-    spProj5p(tmp,res);
-    coalescedWrite(chi[ss],res);
-    
-    for(int s=1;s<Ls-1;s++){
-      res = psi(ss+s);
-      res -= plee[s-1]*tmp;
-      spProj5m(tmp,res);
-      acc += pleem[s]*tmp;
-      spProj5p(tmp,res);
-      coalescedWrite(chi[ss+s],res);
-    }
-    res = psi(ss+Ls-1) - plee[Ls-2]*tmp - acc;
-    
-    // Apply U_m^{-1} D^{-1} U^{-1}
-    acc = (1.0/pdee[Ls  ])*res;
-    tmp = (1.0/pdee[Ls-1])*res;
-    spProj5p(acc,acc);
-    spProj5m(tmp,tmp);
-    coalescedWrite(chi[ss+Ls-1], acc + tmp);
-    for (int s=Ls-2;s>=0;s--){
-      res = (1.0/pdee[s])*chi(ss+s) - puee[s]*tmp - pueem[s]*acc;
-      spProj5m(tmp,res);
-      coalescedWrite(chi[ss+s],res);
-    }
-  });
+//  chi_i.Checkerboard() = psi_i.Checkerboard();
+//  GridBase* grid = psi_i.Grid();
+//  autoView( psi, psi_i, AcceleratorRead);
+//  autoView( chi, chi_i, AcceleratorWrite);
+//  int Ls = this->Ls;
+//
+//  auto plee  = & this->lee[0];
+//  auto pdee  = & this->dee[0];
+//  auto puee  = & this->uee[0];
+//
+//  auto pleem = & this->leem[0];
+//  auto pueem = & this->ueem[0];
+//
+//  uint64_t nloop=grid->oSites()/Ls;
+//  accelerator_for(sss,nloop,Simd::Nsimd(),{
+//    uint64_t ss=sss*Ls;
+//    typedef decltype(coalescedRead(psi[0])) spinor;
+//    spinor tmp, acc, res;
+//
+//    // Apply (L^{\prime})^{-1} L_m^{-1}
+//    res = psi(ss);
+//    spProj5m(tmp,res);
+//    acc = pleem[0]*tmp;
+//    spProj5p(tmp,res);
+//    coalescedWrite(chi[ss],res);
+//    
+//    for(int s=1;s<Ls-1;s++){
+//      res = psi(ss+s);
+//      res -= plee[s-1]*tmp;
+//      spProj5m(tmp,res);
+//      acc += pleem[s]*tmp;
+//      spProj5p(tmp,res);
+//      coalescedWrite(chi[ss+s],res);
+//    }
+//    res = psi(ss+Ls-1) - plee[Ls-2]*tmp - acc;
+//    
+//    // Apply U_m^{-1} D^{-1} U^{-1}
+//    acc = (1.0/pdee[Ls  ])*res;
+//    tmp = (1.0/pdee[Ls-1])*res;
+//    spProj5p(acc,acc);
+//    spProj5m(tmp,tmp);
+//    coalescedWrite(chi[ss+Ls-1], acc + tmp);
+//    for (int s=Ls-2;s>=0;s--){
+//      res = (1.0/pdee[s])*chi(ss+s) - puee[s]*tmp - pueem[s]*acc;
+//      spProj5m(tmp,res);
+//      coalescedWrite(chi[ss+s],res);
+//    }
+//  });
 }
 
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::MooeeInvDag(const FermionField& psi_i, FermionField& chi_i)
 {
-  chi_i.Checkerboard() = psi_i.Checkerboard();
-  GridBase* grid = psi_i.Grid();
-  autoView( psi, psi_i, AcceleratorRead);
-  autoView( chi, chi_i, AcceleratorWrite);
-  int Ls = this->Ls;
-
-  auto plee  = & this->lee[0];
-  auto pdee  = & this->dee[0];
-  auto puee  = & this->uee[0];
-
-  auto pleem = & this->leem[0];
-  auto pueem = & this->ueem[0];
-
-  assert(psi.Checkerboard() == psi.Checkerboard());
-
-  auto nloop = grid->oSites()/Ls;
-  accelerator_for(sss,nloop,Simd::Nsimd(),{
-    uint64_t ss=sss*Ls;
-    typedef decltype(coalescedRead(psi[0])) spinor;
-    spinor tmp, acc, res;
-
-    // Apply (U^{\prime})^{-dagger} U_m^{-\dagger} 
-    res = psi(ss);
-    spProj5p(tmp,res);
-    acc = conjugate(pueem[0])*tmp;
-    spProj5m(tmp,res);
-    coalescedWrite(chi[ss],res);
-    
-    for(int s=1;s<Ls-1;s++){
-      res = psi(ss+s);
-      res -= conjugate(puee[s-1])*tmp;
-      spProj5p(tmp,res);
-      acc += conjugate(pueem[s])*tmp;
-      spProj5m(tmp,res);
-      coalescedWrite(chi[ss+s],res);
-    }
-    res = psi(ss+Ls-1) - conjugate(puee[Ls-2])*tmp - acc;
-    
-    // Apply L_m^{-\dagger} D^{-dagger} L^{-dagger}
-    acc = conjugate(1.0/pdee[Ls-1])*res;
-    tmp = conjugate(1.0/pdee[Ls  ])*res;
-    spProj5m(acc,acc);
-    spProj5p(tmp,tmp);
-    coalescedWrite(chi[ss+Ls-1], acc + tmp);
-    for (int s=Ls-2;s>=0;s--){
-      res = conjugate(1.0/pdee[s])*chi(ss+s) - conjugate(plee[s])*tmp - conjugate(pleem[s])*acc;
-      spProj5p(tmp,res);
-      coalescedWrite(chi[ss+s],res);
-    }
-  });
+//  chi_i.Checkerboard() = psi_i.Checkerboard();
+//  GridBase* grid = psi_i.Grid();
+//  autoView( psi, psi_i, AcceleratorRead);
+//  autoView( chi, chi_i, AcceleratorWrite);
+//  int Ls = this->Ls;
+//
+//  auto plee  = & this->lee[0];
+//  auto pdee  = & this->dee[0];
+//  auto puee  = & this->uee[0];
+//
+//  auto pleem = & this->leem[0];
+//  auto pueem = & this->ueem[0];
+//
+//  assert(psi.Checkerboard() == psi.Checkerboard());
+//
+//  auto nloop = grid->oSites()/Ls;
+//  accelerator_for(sss,nloop,Simd::Nsimd(),{
+//    uint64_t ss=sss*Ls;
+//    typedef decltype(coalescedRead(psi[0])) spinor;
+//    spinor tmp, acc, res;
+//
+//    // Apply (U^{\prime})^{-dagger} U_m^{-\dagger} 
+//    res = psi(ss);
+//    spProj5p(tmp,res);
+//    acc = conjugate(pueem[0])*tmp;
+//    spProj5m(tmp,res);
+//    coalescedWrite(chi[ss],res);
+//    
+//    for(int s=1;s<Ls-1;s++){
+//      res = psi(ss+s);
+//      res -= conjugate(puee[s-1])*tmp;
+//      spProj5p(tmp,res);
+//      acc += conjugate(pueem[s])*tmp;
+//      spProj5m(tmp,res);
+//      coalescedWrite(chi[ss+s],res);
+//    }
+//    res = psi(ss+Ls-1) - conjugate(puee[Ls-2])*tmp - acc;
+//    
+//    // Apply L_m^{-\dagger} D^{-dagger} L^{-dagger}
+//    acc = conjugate(1.0/pdee[Ls-1])*res;
+//    tmp = conjugate(1.0/pdee[Ls  ])*res;
+//    spProj5m(acc,acc);
+//    spProj5p(tmp,tmp);
+//    coalescedWrite(chi[ss+Ls-1], acc + tmp);
+//    for (int s=Ls-2;s>=0;s--){
+//      res = conjugate(1.0/pdee[s])*chi(ss+s) - conjugate(plee[s])*tmp - conjugate(pleem[s])*acc;
+//      spProj5p(tmp,res);
+//      coalescedWrite(chi[ss+s],res);
+//    }
+//  });
 
 }
 

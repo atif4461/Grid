@@ -51,14 +51,14 @@ DomainWallEOFAFermion<Impl>::DomainWallEOFAFermion(
 			    FourDimGrid, FourDimRedBlackGrid, _mq1, _mq2, _mq3,
 			    _shift, _pm, _M5, 1.0, 0.0, p)
 {
-  RealD eps = 1.0;
-  Approx::zolotarev_data *zdata = Approx::higham(eps,this->Ls);
-  assert(zdata->n == this->Ls);
-
-  std::cout << GridLogMessage << "DomainWallEOFAFermion with Ls=" << this->Ls << std::endl;
-  this->SetCoefficientsTanh(zdata, 1.0, 0.0);
-
-  Approx::zolotarev_free(zdata);
+//  RealD eps = 1.0;
+//  Approx::zolotarev_data *zdata = Approx::higham(eps,this->Ls);
+//  assert(zdata->n == this->Ls);
+//
+//  std::cout << GridLogMessage << "DomainWallEOFAFermion with Ls=" << this->Ls << std::endl;
+//  this->SetCoefficientsTanh(zdata, 1.0, 0.0);
+//
+//  Approx::zolotarev_free(zdata);
 }
 
 /***************************************************************
@@ -69,13 +69,13 @@ DomainWallEOFAFermion<Impl>::DomainWallEOFAFermion(
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::Omega(const FermionField& psi, FermionField& Din, int sign, int dag)
 {
-  int Ls = this->Ls;
-
-  Din = Zero();
-  if((sign == 1) && (dag == 0)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, Ls-1, 0); }
-  else if((sign == -1) && (dag == 0)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, 0, 0); }
-  else if((sign == 1 ) && (dag == 1)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, 0, Ls-1); }
-  else if((sign == -1) && (dag == 1)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, 0, 0); }
+//  int Ls = this->Ls;
+//
+//  Din = Zero();
+//  if((sign == 1) && (dag == 0)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, Ls-1, 0); }
+//  else if((sign == -1) && (dag == 0)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, 0, 0); }
+//  else if((sign == 1 ) && (dag == 1)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, 0, Ls-1); }
+//  else if((sign == -1) && (dag == 1)){ axpby_ssp(Din, 0.0, psi, 1.0, psi, 0, 0); }
 }
 
 // This is just the identity for DWF
@@ -91,23 +91,23 @@ void DomainWallEOFAFermion<Impl>::DtildeInv(const FermionField& psi, FermionFiel
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::M(const FermionField& psi, FermionField& chi)
 {
-  FermionField Din(psi.Grid());
-
-  this->Meooe5D(psi, Din);
-  this->DW(Din, chi, DaggerNo);
-  axpby(chi, 1.0, 1.0, chi, psi);
-  this->M5D(psi, chi);
+//  FermionField Din(psi.Grid());
+//
+//  this->Meooe5D(psi, Din);
+//  this->DW(Din, chi, DaggerNo);
+//  axpby(chi, 1.0, 1.0, chi, psi);
+//  this->M5D(psi, chi);
 }
 
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::Mdag(const FermionField& psi, FermionField& chi)
 {
-  FermionField Din(psi.Grid());
-
-  this->DW(psi, Din, DaggerYes);
-  this->MeooeDag5D(Din, chi);
-  this->M5Ddag(psi, chi);
-  axpby(chi, 1.0, 1.0, chi, psi);
+//  FermionField Din(psi.Grid());
+//
+//  this->DW(psi, Din, DaggerYes);
+//  this->MeooeDag5D(Din, chi);
+//  this->M5Ddag(psi, chi);
+//  axpby(chi, 1.0, 1.0, chi, psi);
 }
 
 /********************************************************************
@@ -117,101 +117,101 @@ void DomainWallEOFAFermion<Impl>::Mdag(const FermionField& psi, FermionField& ch
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::M5D(const FermionField& psi, FermionField& chi)
 {
-  int   Ls    = this->Ls;
-  int   pm    = this->pm;
-  RealD shift = this->shift;
-  RealD mq1   = this->mq1;
-  RealD mq2   = this->mq2;
-  RealD mq3   = this->mq3;
-
-  // coefficients for shift operator ( = shift*\gamma_{5}*R_{5}*\Delta_{\pm}(mq2,mq3)*P_{\pm} )
-  Coeff_t shiftp(0.0), shiftm(0.0);
-  if(shift != 0.0){
-    if(pm == 1){ shiftp = shift*(mq3-mq2); }
-    else{ shiftm = -shift*(mq3-mq2); }
-  }
-
-  Vector<Coeff_t> diag(Ls,1.0);
-  Vector<Coeff_t> upper(Ls,-1.0); upper[Ls-1] = mq1 + shiftm;
-  Vector<Coeff_t> lower(Ls,-1.0); lower[0]    = mq1 + shiftp;
-
-#if(0)
-  std::cout << GridLogMessage << "DomainWallEOFAFermion::M5D(FF&,FF&):" << std::endl;
-  for(int i=0; i<diag.size(); ++i){
-    std::cout << GridLogMessage << "diag[" << i << "] =" << diag[i] << std::endl;
-  }
-  for(int i=0; i<upper.size(); ++i){
-    std::cout << GridLogMessage << "upper[" << i << "] =" << upper[i] << std::endl;
-  }
-  for(int i=0; i<lower.size(); ++i){
-    std::cout << GridLogMessage << "lower[" << i << "] =" << lower[i] << std::endl;
-  }
-#endif
-
-  this->M5D(psi, chi, chi, lower, diag, upper);
+//  int   Ls    = this->Ls;
+//  int   pm    = this->pm;
+//  RealD shift = this->shift;
+//  RealD mq1   = this->mq1;
+//  RealD mq2   = this->mq2;
+//  RealD mq3   = this->mq3;
+//
+//  // coefficients for shift operator ( = shift*\gamma_{5}*R_{5}*\Delta_{\pm}(mq2,mq3)*P_{\pm} )
+//  Coeff_t shiftp(0.0), shiftm(0.0);
+//  if(shift != 0.0){
+//    if(pm == 1){ shiftp = shift*(mq3-mq2); }
+//    else{ shiftm = -shift*(mq3-mq2); }
+//  }
+//
+//  Vector<Coeff_t> diag(Ls,1.0);
+//  Vector<Coeff_t> upper(Ls,-1.0); upper[Ls-1] = mq1 + shiftm;
+//  Vector<Coeff_t> lower(Ls,-1.0); lower[0]    = mq1 + shiftp;
+//
+//#if(0)
+//  std::cout << GridLogMessage << "DomainWallEOFAFermion::M5D(FF&,FF&):" << std::endl;
+//  for(int i=0; i<diag.size(); ++i){
+//    std::cout << GridLogMessage << "diag[" << i << "] =" << diag[i] << std::endl;
+//  }
+//  for(int i=0; i<upper.size(); ++i){
+//    std::cout << GridLogMessage << "upper[" << i << "] =" << upper[i] << std::endl;
+//  }
+//  for(int i=0; i<lower.size(); ++i){
+//    std::cout << GridLogMessage << "lower[" << i << "] =" << lower[i] << std::endl;
+//  }
+//#endif
+//
+//  this->M5D(psi, chi, chi, lower, diag, upper);
 }
 
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::M5Ddag(const FermionField& psi, FermionField& chi)
 {
-  int   Ls    = this->Ls;
-  int   pm    = this->pm;
-  RealD shift = this->shift;
-  RealD mq1   = this->mq1;
-  RealD mq2   = this->mq2;
-  RealD mq3   = this->mq3;
-
-  // coefficients for shift operator ( = shift*\gamma_{5}*R_{5}*\Delta_{\pm}(mq2,mq3)*P_{\pm} )
-  Coeff_t shiftp(0.0), shiftm(0.0);
-  if(shift != 0.0){
-    if(pm == 1){ shiftp = shift*(mq3-mq2); }
-    else{ shiftm = -shift*(mq3-mq2); }
-  }
-
-  Vector<Coeff_t> diag(Ls,1.0);
-  Vector<Coeff_t> upper(Ls,-1.0); upper[Ls-1] = mq1 + shiftp;
-  Vector<Coeff_t> lower(Ls,-1.0); lower[0]    = mq1 + shiftm;
-
-  this->M5Ddag(psi, chi, chi, lower, diag, upper);
+//  int   Ls    = this->Ls;
+//  int   pm    = this->pm;
+//  RealD shift = this->shift;
+//  RealD mq1   = this->mq1;
+//  RealD mq2   = this->mq2;
+//  RealD mq3   = this->mq3;
+//
+//  // coefficients for shift operator ( = shift*\gamma_{5}*R_{5}*\Delta_{\pm}(mq2,mq3)*P_{\pm} )
+//  Coeff_t shiftp(0.0), shiftm(0.0);
+//  if(shift != 0.0){
+//    if(pm == 1){ shiftp = shift*(mq3-mq2); }
+//    else{ shiftm = -shift*(mq3-mq2); }
+//  }
+//
+//  Vector<Coeff_t> diag(Ls,1.0);
+//  Vector<Coeff_t> upper(Ls,-1.0); upper[Ls-1] = mq1 + shiftp;
+//  Vector<Coeff_t> lower(Ls,-1.0); lower[0]    = mq1 + shiftm;
+//
+//  this->M5Ddag(psi, chi, chi, lower, diag, upper);
 }
 
 // half checkerboard operations
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::Mooee(const FermionField& psi, FermionField& chi)
 {
-  int Ls = this->Ls;
-
-  Vector<Coeff_t> diag = this->bee;
-  Vector<Coeff_t> upper(Ls);
-  Vector<Coeff_t> lower(Ls);
-
-  for(int s=0; s<Ls; s++){
-    upper[s] = -this->cee[s];
-    lower[s] = -this->cee[s];
-  }
-  upper[Ls-1] = this->dm;
-  lower[0]    = this->dp;
-
-  this->M5D(psi, psi, chi, lower, diag, upper);
+//  int Ls = this->Ls;
+//
+//  Vector<Coeff_t> diag = this->bee;
+//  Vector<Coeff_t> upper(Ls);
+//  Vector<Coeff_t> lower(Ls);
+//
+//  for(int s=0; s<Ls; s++){
+//    upper[s] = -this->cee[s];
+//    lower[s] = -this->cee[s];
+//  }
+//  upper[Ls-1] = this->dm;
+//  lower[0]    = this->dp;
+//
+//  this->M5D(psi, psi, chi, lower, diag, upper);
 }
 
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::MooeeDag(const FermionField& psi, FermionField& chi)
 {
-  int Ls = this->Ls;
-
-  Vector<Coeff_t> diag = this->bee;
-  Vector<Coeff_t> upper(Ls);
-  Vector<Coeff_t> lower(Ls);
-
-  for(int s=0; s<Ls; s++){
-    upper[s] = -this->cee[s];
-    lower[s] = -this->cee[s];
-  }
-  upper[Ls-1] = this->dp;
-  lower[0]    = this->dm;
-
-  this->M5Ddag(psi, psi, chi, lower, diag, upper);
+//  int Ls = this->Ls;
+//
+//  Vector<Coeff_t> diag = this->bee;
+//  Vector<Coeff_t> upper(Ls);
+//  Vector<Coeff_t> lower(Ls);
+//
+//  for(int s=0; s<Ls; s++){
+//    upper[s] = -this->cee[s];
+//    lower[s] = -this->cee[s];
+//  }
+//  upper[Ls-1] = this->dp;
+//  lower[0]    = this->dm;
+//
+//  this->M5Ddag(psi, psi, chi, lower, diag, upper);
 }
 
 /****************************************************************************************/
@@ -220,100 +220,100 @@ void DomainWallEOFAFermion<Impl>::MooeeDag(const FermionField& psi, FermionField
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::SetCoefficientsInternal(RealD zolo_hi, Vector<Coeff_t>& gamma, RealD b, RealD c)
 {
-  int   Ls    = this->Ls;
-  int   pm    = this->pm;
-  RealD mq1   = this->mq1;
-  RealD mq2   = this->mq2;
-  RealD mq3   = this->mq3;
-  RealD shift = this->shift;
-
-  ////////////////////////////////////////////////////////
-  // Constants for the preconditioned matrix Cayley form
-  ////////////////////////////////////////////////////////
-  this->bs.resize(Ls);
-  this->cs.resize(Ls);
-  this->aee.resize(Ls);
-  this->aeo.resize(Ls);
-  this->bee.resize(Ls);
-  this->beo.resize(Ls);
-  this->cee.resize(Ls);
-  this->ceo.resize(Ls);
-
-  for(int i=0; i<Ls; ++i){
-    this->bee[i] = 4.0 - this->M5 + 1.0;
-    this->cee[i] = 1.0;
-  }
-
-  for(int i=0; i<Ls; ++i){
-    this->aee[i] = this->cee[i];
-    this->bs[i] = this->beo[i] = 1.0;
-    this->cs[i] = this->ceo[i] = 0.0;
-  }
-
-  //////////////////////////////////////////
-  // EOFA shift terms
-  //////////////////////////////////////////
-  if(pm == 1){
-    this->dp = mq1*this->cee[0] + shift*(mq3-mq2);
-    this->dm = mq1*this->cee[Ls-1];
-  } else if(this->pm == -1) {
-    this->dp = mq1*this->cee[0];
-    this->dm = mq1*this->cee[Ls-1] - shift*(mq3-mq2);
-  } else {
-    this->dp = mq1*this->cee[0];
-    this->dm = mq1*this->cee[Ls-1];
-  }
-
-  //////////////////////////////////////////
-  // LDU decomposition of eeoo
-  //////////////////////////////////////////
-  this->dee.resize(Ls+1);
-  this->lee.resize(Ls);
-  this->leem.resize(Ls);
-  this->uee.resize(Ls);
-  this->ueem.resize(Ls);
-
-  for(int i=0; i<Ls; ++i){
-
-    if(i < Ls-1){
-
-      this->lee[i] = -this->cee[i+1]/this->bee[i]; // sub-diag entry on the ith column
-
-      this->leem[i] = this->dm/this->bee[i];
-      for(int j=0; j<i; j++){ this->leem[i] *= this->aee[j]/this->bee[j]; }
-
-      this->dee[i] = this->bee[i];
-
-      this->uee[i] = -this->aee[i]/this->bee[i];   // up-diag entry on the ith row
-
-      this->ueem[i] = this->dp / this->bee[0];
-      for(int j=1; j<=i; j++){ this->ueem[i] *= this->cee[j]/this->bee[j]; }
-
-    } else {
-
-      this->lee[i]  = 0.0;
-      this->leem[i] = 0.0;
-      this->uee[i]  = 0.0;
-      this->ueem[i] = 0.0;
-
-    }
-  }
-
-  {
-    Coeff_t delta_d = 1.0 / this->bee[0];
-    for(int j=1; j<Ls-1; j++){ delta_d *= this->cee[j] / this->bee[j]; }
-    this->dee[Ls-1] = this->bee[Ls-1] + this->cee[0] * this->dm * delta_d;
-    this->dee[Ls] = this->bee[Ls-1] + this->cee[Ls-1] * this->dp * delta_d;
-  }
+//  int   Ls    = this->Ls;
+//  int   pm    = this->pm;
+//  RealD mq1   = this->mq1;
+//  RealD mq2   = this->mq2;
+//  RealD mq3   = this->mq3;
+//  RealD shift = this->shift;
+//
+//  ////////////////////////////////////////////////////////
+//  // Constants for the preconditioned matrix Cayley form
+//  ////////////////////////////////////////////////////////
+//  this->bs.resize(Ls);
+//  this->cs.resize(Ls);
+//  this->aee.resize(Ls);
+//  this->aeo.resize(Ls);
+//  this->bee.resize(Ls);
+//  this->beo.resize(Ls);
+//  this->cee.resize(Ls);
+//  this->ceo.resize(Ls);
+//
+//  for(int i=0; i<Ls; ++i){
+//    this->bee[i] = 4.0 - this->M5 + 1.0;
+//    this->cee[i] = 1.0;
+//  }
+//
+//  for(int i=0; i<Ls; ++i){
+//    this->aee[i] = this->cee[i];
+//    this->bs[i] = this->beo[i] = 1.0;
+//    this->cs[i] = this->ceo[i] = 0.0;
+//  }
+//
+//  //////////////////////////////////////////
+//  // EOFA shift terms
+//  //////////////////////////////////////////
+//  if(pm == 1){
+//    this->dp = mq1*this->cee[0] + shift*(mq3-mq2);
+//    this->dm = mq1*this->cee[Ls-1];
+//  } else if(this->pm == -1) {
+//    this->dp = mq1*this->cee[0];
+//    this->dm = mq1*this->cee[Ls-1] - shift*(mq3-mq2);
+//  } else {
+//    this->dp = mq1*this->cee[0];
+//    this->dm = mq1*this->cee[Ls-1];
+//  }
+//
+//  //////////////////////////////////////////
+//  // LDU decomposition of eeoo
+//  //////////////////////////////////////////
+//  this->dee.resize(Ls+1);
+//  this->lee.resize(Ls);
+//  this->leem.resize(Ls);
+//  this->uee.resize(Ls);
+//  this->ueem.resize(Ls);
+//
+//  for(int i=0; i<Ls; ++i){
+//
+//    if(i < Ls-1){
+//
+//      this->lee[i] = -this->cee[i+1]/this->bee[i]; // sub-diag entry on the ith column
+//
+//      this->leem[i] = this->dm/this->bee[i];
+//      for(int j=0; j<i; j++){ this->leem[i] *= this->aee[j]/this->bee[j]; }
+//
+//      this->dee[i] = this->bee[i];
+//
+//      this->uee[i] = -this->aee[i]/this->bee[i];   // up-diag entry on the ith row
+//
+//      this->ueem[i] = this->dp / this->bee[0];
+//      for(int j=1; j<=i; j++){ this->ueem[i] *= this->cee[j]/this->bee[j]; }
+//
+//    } else {
+//
+//      this->lee[i]  = 0.0;
+//      this->leem[i] = 0.0;
+//      this->uee[i]  = 0.0;
+//      this->ueem[i] = 0.0;
+//
+//    }
+//  }
+//
+//  {
+//    Coeff_t delta_d = 1.0 / this->bee[0];
+//    for(int j=1; j<Ls-1; j++){ delta_d *= this->cee[j] / this->bee[j]; }
+//    this->dee[Ls-1] = this->bee[Ls-1] + this->cee[0] * this->dm * delta_d;
+//    this->dee[Ls] = this->bee[Ls-1] + this->cee[Ls-1] * this->dp * delta_d;
+//  }
 }
 
 // Recompute Cayley-form coefficients for different shift
 template<class Impl>
 void DomainWallEOFAFermion<Impl>::RefreshShiftCoefficients(RealD new_shift)
 {
-  this->shift = new_shift;
-  Approx::zolotarev_data *zdata = Approx::higham(1.0, this->Ls);
-  this->SetCoefficientsTanh(zdata, 1.0, 0.0);
+//  this->shift = new_shift;
+//  Approx::zolotarev_data *zdata = Approx::higham(1.0, this->Ls);
+//  this->SetCoefficientsTanh(zdata, 1.0, 0.0);
 }
 
 NAMESPACE_END(Grid);

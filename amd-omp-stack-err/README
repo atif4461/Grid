@@ -14,6 +14,10 @@ ranlib libWilsonFails.a
 
 amdclang++ -o Test -I/autofs/nccs-svm1_home1/atif/Grid -I/autofs/nccs-svm1_home1/atif/Grid/build-amd-err/Grid/   -O3 -Wno-unknown-cuda-version -fopenmp --offload-arch=gfx90a -std=c++14 -fopenmp-cuda-mode -O3 -Wformat -DEIGEN_NO_CUDA -DOMPTARGET  -fno-strict-aliasing Test.o -L./  -lWilsonFails
 
+fails with error
+error: stack frame size (149840) exceeds limit (131056) in function '__omp_offloading_73_1e118ab9__ZN4Grid7LatticeINS_7iScalarINS_7iMatrixINS2_INS_9Grid_simdISt7complexIdENS_12Optimization3vecIdEEEELi3EEELi4EEEEEEaSINS_12TrinaryWhereENS0_INS1_INS3_IjNS7_IjEEEEEEEESD_SD_EERSD_RKNS_24LatticeTrinaryExpressionIT_T0_T1_T2_EE_l190'
+which corresponds to Line 428 of objdump_fails.txt
+
 error: stack frame size (149840) exceeds limit (131056) in function '__omp_offloading_72_1e118ab9__ZN4Grid7LatticeINS_7iScalarINS_7iMatrixINS2_INS_9Grid_simdISt7complexIdENS_12Optimization3vecIdEEEELi3EEELi4EEEEEEaSINS_12TrinaryWhereENS0_INS1_INS3_IjNS7_IjEEEEEEEESD_SD_EERSD_RKNS_24LatticeTrinaryExpressionIT_T0_T1_T2_EE_l190'
 error: stack frame size (149840) exceeds limit (131056) in function '__omp_offloading_72_1e118ab9__ZN4Grid7LatticeINS_7iScalarINS_7iMatrixINS2_INS_9Grid_simdISt7complexIdENS_12Optimization3vecIdEEEELi3EEELi4EEEEEEaSINS_12TrinaryWhereENS_23LatticeBinaryExpressionINS_10BinaryOrOrENS0_INS1_INS3_IjNS7_IjEEEEEEEESL_EESD_SD_EERSD_RKNS_24LatticeTrinaryExpressionIT_T0_T1_T2_EE_l190'
 error: stack frame size (149840) exceeds limit (131056) in function '__omp_offloading_72_1e118ab9__ZN4Grid7LatticeINS_7iScalarINS_7iMatrixINS2_INS_9Grid_simdISt7complexIdENS_12Optimization3vecIdEEEELi3EEELi4EEEEEEaSINS_9BinaryAddESD_NS_24LatticeTrinaryExpressionINS_12TrinaryWhereENS0_INS1_INS3_IjNS7_IjEEEEEEEESD_SD_EEEERSD_RKNS_23LatticeBinaryExpressionIT_T0_T1_EE_l166'
