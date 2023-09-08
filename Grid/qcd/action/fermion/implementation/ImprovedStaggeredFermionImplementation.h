@@ -211,11 +211,11 @@ void ImprovedStaggeredFermion<Impl>::Mooee(const FermionField &in, FermionField 
 //  out.Checkerboard() = in.Checkerboard();
 //  typename FermionField::scalar_type scal(mass);
 //  out = scal * in;
-//}
-//
-//template <class Impl>
-//void ImprovedStaggeredFermion<Impl>::MooeeDag(const FermionField &in, FermionField &out) 
-//{
+}
+
+template <class Impl>
+void ImprovedStaggeredFermion<Impl>::MooeeDag(const FermionField &in, FermionField &out) 
+{
 //  out.Checkerboard() = in.Checkerboard();
 //  Mooee(in, out);
 }
@@ -364,16 +364,16 @@ void ImprovedStaggeredFermion<Impl>::DhopEO(const FermionField &in, FermionField
 //  out.Checkerboard() = Even;
 //
 //  DhopInternal(StencilOdd, LebesgueEvenOdd, UmuEven, UUUmuEven, in, out, dag);
-//}
-//
-//template <class Impl>
-//void ImprovedStaggeredFermion<Impl>::Mdir(const FermionField &in, FermionField &out, int dir, int disp) 
-//{
+}
+
+template <class Impl>
+void ImprovedStaggeredFermion<Impl>::Mdir(const FermionField &in, FermionField &out, int dir, int disp) 
+{
 //  DhopDir(in, out, dir, disp);
-//}
-//template <class Impl>
-//void ImprovedStaggeredFermion<Impl>::MdirAll(const FermionField &in, std::vector<FermionField> &out) 
-//{
+}
+template <class Impl>
+void ImprovedStaggeredFermion<Impl>::MdirAll(const FermionField &in, std::vector<FermionField> &out) 
+{
 //  assert(0); // Not implemented yet
 }
 

@@ -301,12 +301,12 @@ void CayleyFermion5D<Impl>::Mdag (const FermionField &psi, FermionField &chi)
 //  M5Ddag(psi,chi);
 //  // ((b D_W + D_w hop terms +1) on s-diag
 //  axpby (chi,1.0,1.0,chi,psi); 
-//}
-//
-//// half checkerboard operations
-//template<class Impl>
-//void CayleyFermion5D<Impl>::Meooe       (const FermionField &psi, FermionField &chi)
-//{
+}
+
+// half checkerboard operations
+template<class Impl>
+void CayleyFermion5D<Impl>::Meooe       (const FermionField &psi, FermionField &chi)
+{
 //  Meooe5D(psi,this->tmp()); 
 //
 //  if ( psi.Checkerboard() == Odd ) {
@@ -397,11 +397,11 @@ void CayleyFermion5D<Impl>::SetCoefficientsTanh(Approx::zolotarev_data *zdata,Re
 //  Vector<Coeff_t> gamma(this->Ls);
 //  for(int s=0;s<this->Ls;s++) gamma[s] = zdata->gamma[s];
 //  SetCoefficientsInternal(1.0,gamma,b,c);
-//}
-////Zolo
-//template<class Impl>
-//void CayleyFermion5D<Impl>::SetCoefficientsZolotarev(RealD zolo_hi,Approx::zolotarev_data *zdata,RealD b,RealD c)
-//{
+}
+//Zolo
+template<class Impl>
+void CayleyFermion5D<Impl>::SetCoefficientsZolotarev(RealD zolo_hi,Approx::zolotarev_data *zdata,RealD b,RealD c)
+{
 //  Vector<Coeff_t> gamma(this->Ls);
 //  for(int s=0;s<this->Ls;s++) gamma[s] = zdata->gamma[s];
 //  SetCoefficientsInternal(zolo_hi,gamma,b,c);
