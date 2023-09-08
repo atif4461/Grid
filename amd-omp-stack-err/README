@@ -26,4 +26,4 @@ clang-16: error: amdgcn-link command failed with exit code 1 (use -v to see invo
 
 llvm-objdump -t libWilsonFermionWorks2.a > objdump_works2.txt
 llvm-cxxfilt < objdump_works2.txt > cxxfilt_works2.txt
-
+llvm-readelf -VWs Benchmark_ITT.o | grep "memcpy"
